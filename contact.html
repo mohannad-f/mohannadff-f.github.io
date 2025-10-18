@@ -1,160 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>للتواصل معنا - BASIRA IMAN</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    <!-- تذكير الصلاة على النبي -->
-    <div class="prayer-reminder">
-        <div class="prayer-ar">صل على النبي محمد 💚</div>
-        <div class="prayer-en">Peace and blessings be upon our Prophet Muhammad</div>
-    </div>
-
-    <!-- المحتوى الرئيسي -->
-    <div class="container">
-        <!-- رأس الصفحة -->
-        <header class="page-header">
-            <a href="index.html" class="back-btn">
-                <i class="fas fa-arrow-right"></i>
-                العودة للرئيسية
-            </a>
-            <div class="page-title">
-                <h1 class="title-ar">للتواصل معنا</h1>
-                <p class="title-en">Contact Us</p>
-            </div>
-        </header>
-
-        <!-- وصف القسم -->
-        <section style="text-align: center; margin-bottom: 40px;">
-            <p style="font-size: 1.2rem; color: #d4e6d4; line-height: 1.6;">
-                تواصل معنا عبر منصاتنا الرسمية
-            </p>
-            <p style="font-size: 1rem; color: #b8d4b8; font-family: 'Roboto', sans-serif; font-style: italic;">
-                Connect with us through our official platforms
-            </p>
-        </section>
-
-        <!-- روابط التواصل -->
-        <main class="social-links" id="social-container">
-            <!-- واتساب -->
-            <a href="https://wa.me/201021937293" target="_blank" class="social-link whatsapp-link">
-                <div class="social-icon">
-                    <i class="fab fa-whatsapp"></i>
-                </div>
-                <div class="social-content">
-                    <h3 class="social-title">واتساب</h3>
-                    <p class="social-description">للتواصل المباشر والاستفسارات</p>
-                </div>
-            </a>
-
-            <!-- إنستغرام -->
-            <a href="https://www.instagram.com/basira_iman?igsh=MTN1bmZlYnB6M2FjbQ==" target="_blank" class="social-link instagram-link">
-                <div class="social-icon">
-                    <i class="fab fa-instagram"></i>
-                </div>
-                <div class="social-content">
-                    <h3 class="social-title">إنستغرام</h3>
-                    <p class="social-description">تابعنا للمحتوى اليومي المفيد</p>
-                </div>
-            </a>
-
-            <!-- فيسبوك -->
-            <a href="https://www.facebook.com/share/1E5ADXw31s/" target="_blank" class="social-link facebook-link">
-                <div class="social-icon">
-                    <i class="fab fa-facebook-f"></i>
-                </div>
-                <div class="social-content">
-                    <h3 class="social-title">فيسبوك</h3>
-                    <p class="social-description">انضم لمجتمعنا على فيسبوك</p>
-                </div>
-            </a>
-
-            <!-- تيك توك -->
-            <a href="https://tiktok.com/@basira_iman" target="_blank" class="social-link tiktok-link">
-                <div class="social-icon">
-                    <i class="fab fa-tiktok"></i>
-                </div>
-                <div class="social-content">
-                    <h3 class="social-title">تيك توك</h3>
-                    <p class="social-description">محتوى قصير وملهم</p>
-                </div>
-            </a>
-        </main>
-
-        <!-- رسالة الدعم -->
-        <section class="support-section">
-            <div class="support-text">
-                في حال وجود أي مشاكل أو أخطاء في النصوص، يرجى التواصل مع فريق الدعم المكون من <strong>مهند ومهند</strong> 🏃‍♂️
-            </div>
-            <div class="support-text" style="font-family: 'Roboto', sans-serif; font-style: italic; margin-top: 10px;">
-                In case of any issues or errors in the texts, please contact the support team consisting of <strong>Mohannad and Mohannad</strong>. 🏃‍♂️
-            </div>
-        </section>
-
-        <!-- نص تشجيعي -->
-        <footer style="text-align: center; margin-top: 40px; color: #d4e6d4;">
-            <p style="font-size: 1.1rem; margin-bottom: 5px;">نسعد بتواصلكم ومشاركتكم</p>
-            <p style="font-size: 0.9rem; font-family: 'Roboto', sans-serif; font-style: italic;">We look forward to hearing from you</p>
-        </footer>
-    </div>
-
-    <script>
-        // تأثيرات تفاعلية للروابط
-        document.addEventListener('DOMContentLoaded', function() {
-            const socialLinks = document.querySelectorAll('.social-link');
-            
-            socialLinks.forEach(link => {
-                link.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-3px) scale(1.02)';
-                });
-                
-                link.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
-                
-                // تأثير النقر
-                link.addEventListener('click', function(e) {
-                    // إضافة تأثير النقر
-                    this.style.transform = 'translateY(-1px) scale(0.98)';
-                    
-                    setTimeout(() => {
-                        this.style.transform = 'translateY(-3px) scale(1.02)';
-                    }, 150);
-                    
-                    // إظهار إشعار
-                    const platform = this.querySelector('.social-title').textContent;
-                    showNotification(`جاري فتح ${platform}...`);
-                });
-            });
-        });
-
-        // إظهار إشعار
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 2000);
-        }
-
-        // تأثير تحميل الصفحة
-        window.addEventListener('load', function() {
-            const socialLinks = document.querySelectorAll('.social-link');
-            
-            socialLinks.forEach((link, index) => {
-                setTimeout(() => {
-                    link.classList.add('fade-in');
-                }, index * 200);
-            });
-        });
-    </script>
-</body>
-</html>
