@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آيات السعادة - BASIRA IMAN</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- تذكير الصلاة على النبي -->
+    <div class="prayer-reminder">
+        <div class="prayer-ar">صل على النبي محمد 💚</div>
+        <div class="prayer-en">Peace and blessings be upon our Prophet Muhammad</div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <!-- رأس الصفحة -->
+        <header class="page-header">
+            <a href="ayat.html" class="back-btn">
+                <i class="fas fa-arrow-right"></i>
+                العودة لآيات المشاعر
+            </a>
+            <div class="page-title">
+                <h1 class="title-ar">آيات السعادة 😊</h1>
+                <p class="title-en">Verses of Happiness</p>
+            </div>
+        </header>
+
+        <!-- قائمة الآيات -->
+        <main class="verses-list" id="verses-container">
+            <!-- سيتم ملء الآيات بواسطة JavaScript -->
+        </main>
+    </div>
+
+    <script>
+        // بيانات آيات السعادة
+        const happyVerses = [
+            {
+                id: 1,
+                title: "الحديد ١٢",
+                englishTitle: "Al-Hadid 12",
+                verse_text: "﴿يَوْمَ تَرَى ٱلۡمُؤۡمِنِينَ وَٱلۡمُؤۡمِنَـٰتِ يَسۡعَىٰ نُورُهُم بَيۡنَ أَيۡدِيهِمۡ وَبِأَيۡمَـٰنِهِم بُشۡرَىٰكُمُ ٱلۡيَوۡمَ جَنَّـٰتٞ تَجۡرِي مِن تَحۡتِهَا ٱلۡأَنۡهَـٰرُ خَـٰلِدِينَ فِيهَاۚ ذَٰلِكَ هُوَ ٱلۡفَوۡزُ ٱلۡعَظِيمُ﴾ [الحديد: ١٢]",
+                content: "اسمع يا عزيزي القارئ، هذه الآية الكريمة ترسم لوحة من أعظم مشاهد يوم القيامة، لحظة السعادة الكبرى التي تفوق كل سعادة عرفها البشر في الدنيا. يقول الله تعالى إنك سترى المؤمنين والمؤمنات يوم القيامة، والنور يفيض من أمامهم وعن أيمانهم، يضيء طريقهم في ظلمات ذلك اليوم العظيم..."
+            },
+            {
+                id: 2,
+                title: "الأحقاف ١٤",
+                englishTitle: "Al-Ahqaf 14",
+                verse_text: "﴿أُو۟لَـٰٓئِكَ أَصْحَـٰبُ ٱلۡجَنَّةِ خَـٰلِدِينَ فِيهَا جَزَآءًۢ بِمَا كَانُوا۟ يَعۡمَلُونَ﴾ [الأحقاف: ١٤]",
+                content: "اسمع يا عزيزي القارئ، هذه الآية تأتي بعد أن ذكر الله حال المؤمنين الذين قالوا: ربنا الله ثم استقاموا، ما التفتوا لغيره ولا بدّلوا ولا انحرفوا. النتيجة التي يعلنها الله لهم هنا هي خلاصة السعادة والطمأنينة..."
+            },
+            {
+                id: 3,
+                title: "ق ٣٢",
+                englishTitle: "Qaaf 32",
+                verse_text: "﴿هَـٰذَا مَا تُوعَدُونَ لِكُلِّ أَوَّابٍ حَفِيظٍ﴾ [ق: ٣٢]",
+                content: "اسمع يا عزيزي القارئ، هذه الآية تأتي في مشهد مهيب من مشاهد يوم القيامة، بعدما ذكر الله تعالى الجنة ونعيمها وما أُعِدّ فيها، ثم يخاطب عباده الذين استحقوها بقوله: ﴿هَـٰذَا مَا تُوعَدُونَ﴾..."
+            }
+        ];
+
+        // عرض قائمة الآيات
+        function displayVerses() {
+            const container = document.getElementById('verses-container');
+            container.innerHTML = '';
+
+            happyVerses.forEach(verse => {
+                const verseCard = document.createElement('div');
+                verseCard.className = 'verse-card fade-in';
+                verseCard.onclick = () => goToVerse(verse.id);
+
+                verseCard.innerHTML = `
+                    <div class="verse-header">
+                        <h3 class="verse-title-ar">${verse.title}</h3>
+                        <p class="verse-title-en">${verse.englishTitle}</p>
+                    </div>
+                    <div class="verse-preview">
+                        <p class="verse-text-preview">${verse.verse_text.substring(0, 100)}...</p>
+                        <p class="verse-content-preview">${verse.content.substring(0, 150)}...</p>
+                    </div>
+                    <div class="verse-footer">
+                        <span class="read-more">اقرأ التفسير الكامل</span>
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+                `;
+
+                container.appendChild(verseCard);
+            });
+        }
+
+        // الانتقال لصفحة الآية
+        function goToVerse(verseId) {
+            window.location.href = `verse-happy-${verseId}.html`;
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            displayVerses();
+        });
+    </script>
+</body>
+</html>
