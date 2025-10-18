@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وصايا النبي - BASIRA IMAN</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="hadiths-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- تذكير الصلاة على النبي -->
+    <div class="prophet-reminder">
+        <div class="reminder-content">
+            <span class="reminder-ar">صل على النبي محمد 💚</span>
+            <span class="reminder-en">Peace and blessings be upon our Prophet Muhammad 💚</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- رأس الصفحة -->
+        <header class="page-header">
+            <button class="back-btn" onclick="goHome()">
+                <i class="fas fa-arrow-right"></i>
+                <span>العودة للرئيسية</span>
+            </button>
+            
+            <div class="page-title">
+                <h1 class="title-ar">وصايا النبي</h1>
+                <p class="title-en">Prophet's Teachings</p>
+            </div>
+        </header>
+
+        <!-- وصف القسم -->
+        <div class="section-description">
+            <div class="description-content">
+                <p class="description-ar">
+                    أحاديث نبوية شريفة مع شرحها وتوضيحها لتكون نبراساً في حياتنا
+                </p>
+                <p class="description-en">
+                    Noble Prophetic traditions with their explanations to guide our lives
+                </p>
+            </div>
+        </div>
+
+        <!-- الأحاديث المتاحة -->
+        <main class="hadiths-grid">
+            <div class="hadiths-container">
+                <!-- الحديث الأول -->
+                <div class="hadith-card" onclick="openHadithPage(1)">
+                    <div class="hadith-icon">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <div class="hadith-content">
+                        <h3 class="hadith-title-ar">حسن الخلق</h3>
+                        <p class="hadith-title-en">Good Character</p>
+                        <div class="hadith-source">البخاري ٣٥٥٩</div>
+                        <div class="hadith-preview">
+                            إن من خياركم أحسنكم أخلاقاً...
+                        </div>
+                    </div>
+                    <div class="hadith-arrow">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                </div>
+
+                <!-- بطاقات للأحاديث المستقبلية -->
+                <div class="coming-soon-cards">
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                        <div class="coming-soon-content">
+                            <h3 class="coming-soon-title">قريباً</h3>
+                            <p class="coming-soon-subtitle">Coming Soon</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- إحصائيات -->
+        <div class="stats-section">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <span class="stat-number">1</span>
+                    <span class="stat-label">حديث متاح</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">99</span>
+                    <span class="stat-label">قريباً</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100</span>
+                    <span class="stat-label">المجموع</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- رسالة تشجيعية -->
+        <div class="encouragement-section">
+            <div class="encouragement-content">
+                <div class="encouragement-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <p class="encouragement-text-ar">
+                    نعمل بجد لإضافة المزيد من الأحاديث النبوية الشريفة
+                </p>
+                <p class="encouragement-text-en">
+                    We are working hard to add more noble Prophetic traditions
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- الهلال الإسلامي في الخلفية -->
+    <div class="crescent-background">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="hadiths-script-final.js"></script>
+</body>
+</html>
