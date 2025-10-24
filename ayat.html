@@ -119,22 +119,23 @@
             document.getElementById('backBtn').href = 'index.html';
             document.getElementById('backText').textContent = 'العودة للرئيسية';
             
-            const emotions = [
-                { key: 'happy', icon: '😊' },
-                { key: 'angry', icon: '😠' },
-                { key: 'sad', icon: '😢' },
-                { key: 'alone', icon: '🌙' },
-                { key: 'penitent', icon: '😔' },
-                { key: 'afraid', icon: '😰' },
-                { key: 'lost', icon: '🤔' },
-                { key: 'message', icon: '💌' }
-            ];
+       const emotions = [
+    { key: 'happy', icon: '<i class="fas fa-smile"></i>' },
+    { key: 'angry', icon: '<i class="fas fa-angry"></i>' },
+    { key: 'sad', icon: '<i class="fas fa-sad-tear"></i>' },
+    { key: 'alone', icon: '<i class="fas fa-moon"></i>' },
+    { key: 'penitent', icon: '<i class="fas fa-heart-broken"></i>' },
+    { key: 'afraid', icon: '<i class="fas fa-exclamation-triangle"></i>' },
+    { key: 'lost', icon: '<i class="fas fa-question-circle"></i>' },
+    { key:'message', icon: '<i class="fas fa-envelope-open-text"></i>' }
+];            
+            
             
             feelingsGrid.innerHTML = emotions.map(emotion => {
                 const data = versesData[emotion.key];
                 return `
                     <a href="#" onclick="showVersesList('${emotion.key}'); return false;" class="feeling-card">
-                        <div class="feeling-title">${data.name_ar} ${emotion.icon}</div>
+                        <div class="feeling-title"><latex${emotion.icon} $</latex>{data.name_ar}</div>
                         <div class="feeling-title-en">${data.name_en}</div>
                         <div class="verses-count">${data.count} آية</div>
                     </a>
