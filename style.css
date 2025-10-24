@@ -696,3 +696,7 @@ body::after {
     }
 }
 
+.feeling-title i {
+    margin-left: 8px;
+    color: #4CAF50;
+}
