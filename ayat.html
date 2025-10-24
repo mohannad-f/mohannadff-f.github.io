@@ -119,27 +119,26 @@
             document.getElementById('backBtn').href = 'index.html';
             document.getElementById('backText').textContent = 'العودة للرئيسية';
             
-       const emotions = [
-    { key: 'happy', icon: '<i class="fas fa-smile"></i>' },
-    { key: 'angry', icon: '<i class="fas fa-angry"></i>' },
-    { key: 'sad', icon: '<i class="fas fa-sad-tear"></i>' },
-    { key: 'alone', icon: '<i class="fas fa-moon"></i>' },
-    { key: 'penitent', icon: '<i class="fas fa-heart-broken"></i>' },
-    { key: 'afraid', icon: '<i class="fas fa-exclamation-triangle"></i>' },
-    { key: 'lost', icon: '<i class="fas fa-question-circle"></i>' },
-    { key:'message', icon: '<i class="fas fa-envelope-open-text"></i>' }
+      const emotions = [
+    { key: 'happy', name_ar: 'سعيد', name_en: 'Happy', icon: '<i class="fas fa-smile"></i>' },
+    { key: 'angry', name_ar: 'الغضب', name_en: 'Angry', icon: '<i class="fas fa-angry"></i>' },
+    { key: 'sad', name_ar: 'حزن', name_en: 'Sad', icon: '<i class="fas fa-sad-tear"></i>' },
+    { key: 'alone', name_ar: 'وحدة', name_en: 'Alone', icon: '<i class="fas fa-moon"></i>' },
+    { key: 'penitent', name_ar: 'الندم', name_en: 'Penitent', icon: '<i class="fas fa-heart-broken"></i>' },
+    { key: 'afraid', name_ar: 'الخوف', name_en: 'Afraid', icon: '<i class="fas fa-exclamation-triangle"></i>' },
+    { key: 'lost', name_ar: 'تائه', name_en: 'Lost', icon: '<i class="fas fa-question-circle"></i>' },
+    { key: 'message', name_ar: 'رسالة', name_en: 'Message', icon: '<i class="fas fa-envelope-open-text"></i>' }
 ];            
-            
-            
             feelingsGrid.innerHTML = emotions.map(emotion => {
                 const data = versesData[emotion.key];
-                return `
-                    <a href="#" onclick="showVersesList('${emotion.key}'); return false;" class="feeling-card">
-                        <div class="feeling-title"><latex${emotion.icon} $</latex>{data.name_ar}</div>
-                        <div class="feeling-title-en">${data.name_en}</div>
-                        <div class="verses-count">${data.count} آية</div>
-                    </a>
-                `;
+               return `
+    <a href="#" onclick="showVersesList('${emotion.key}'); return false;" class="feeling-card">
+        <div class="feeling-title">${emotion.icon} ${emotion.name_ar}</div>
+        <div class="feeling-title-en">${emotion.name_en}</div>
+        <div class="verses-count">${data.count} آية</div>
+    </a>
+`;                `;
+            
             }).join('');
         }
 
