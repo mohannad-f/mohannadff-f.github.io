@@ -58,7 +58,9 @@ body::after {
     padding: 8px 20px;
     z-index: 1000;
     animation: glow 3s ease-in-out infinite alternate;
+    text-align: center;
 }
+
 
 .prayer-reminder .prayer-ar {
     font-size: 0.9rem;
