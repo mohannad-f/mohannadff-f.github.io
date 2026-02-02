@@ -29,17 +29,6 @@ body::before {
     z-index: 0;
 }
 
-body::before {
-    content: '🌙';
-    position: fixed;
-    top: 20%;
-    right: 50%;
-    font-size: 10rem;
-    opacity: 0.1;
-    animation: float 6s ease-in-out infinite;
-    z-index: 0;
-}
-
 body::after {
     content: '🌙';
     position: fixed;
