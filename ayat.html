@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آيات المشاعر - BASIRA IMAN</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- النقاط البيضاء المتحركة -->
+    <div class="floating-dots" id="floatingDots"></div>
+
+    <!-- تذكير الصلاة على النبي -->
+    <div class="prayer-reminder">
+        <div class="prayer-ar">صل على النبي محمد 💚</div>
+        <div class="prayer-en">Peace and blessings be upon our Prophet Muhammad</div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <!-- رأس الصفحة -->
+        <header class="page-header">
+            <a href="index.html" class="back-btn" id="backBtn">
+                <i class="fas fa-arrow-right"></i>
+                <span id="backText">العودة للرئيسية</span>
+            </a>
+            <div class="page-title">
+                <h1 class="title-ar" id="pageTitle">آيات المشاعر</h1>
+                <p class="title-en" id="pageSubtitle">Verses of Emotions</p>
+            </div>
+        </header>
+
+        <!-- شريط البحث -->
+        <section class="search-section" id="searchSection">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="ابحث في الآيات...">
+                <button class="search-btn" onclick="performSearch()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- شبكة المشاعر (المستوى الأول) -->
+        <div class="feelings-grid" id="feelingsGrid">
+            <!-- سيتم ملؤها بواسطة JavaScript -->
+        </div>
+
+        <!-- قائمة الآيات (المستوى الثاني) -->
+        <div class="verses-list" id="versesList" style="display: none;">
+            <!-- سيتم ملؤها بواسطة JavaScript -->
+        </div>
+
+        <!-- محتوى الآية (المستوى الثالث) -->
+        <main class="verse-content" id="verseContent" style="display: none;">
+            <!-- نص الآية -->
+            <section class="verse-section">
+                <div class="verse-header">
+                    <h2>نص الآية الكريمة</h2>
+                    <div class="verse-actions">
+                        <button onclick="toggleFavorite()" class="action-btn favorite-btn" id="favoriteBtn">
+                            <i class="fas fa-heart"></i>
+                            <span id="favoriteBtnText">إضافة للمفضلة</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="verse-text-container">
+                    <p class="verse-text" id="verseText"></p>
+                </div>
+            </section>
+
+            <!-- التفسير -->
+            <section class="interpretation-section">
+                <div class="section-header">
+                    <h2>التفسير والشرح</h2>
+                    <div class="section-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                </div>
+                <div class="interpretation-content" id="tafsirContent">
+                </div>
+            </section>
+
+            <!-- الترجمة الإنجليزية -->
+            <section class="english-section">
+                <div class="section-header">
+                    <h2>English Translation & Commentary</h2>
+                    <div class="section-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                </div>
+                <div class="english-content" id="englishContent">
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // إنشاء النقاط البيضاء المتحركة
+        function createFloatingDots() {
+            const container = document.getElementById('floatingDots');
+            const dotCount = 30;
+            
+            for (let i = 0; i < dotCount; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                dot.style.left = Math.random() * 100 + '%';
+                const duration = 10 + Math.random() * 10;
+                dot.style.animationDuration = duration + 's';
+                dot.style.animationDelay = Math.random() * 5 + 's';
+                const size = 3 + Math.random() * 3;
+                dot.style.width = size + 'px';
+                dot.style.height = size + 'px';
+                container.appendChild(dot);
+            }
+        }
+        
+        window.addEventListener('load', createFloatingDots);
+
+        // تحميل البيانات
+        let versesData = null;
+        let currentEmotion = null;
+        let currentVerseIndex = null;
+
+        // تحميل البيانات من الملف
+        fetch('verses_data.json')
+            .then(response => response.json())
+            .then(data => {
+                versesData = data;
+                
+                // التحقق من الرابط المباشر
+                const hash = window.location.hash;
+                if (hash && hash.includes('_')) {
+                    const parts = hash.substring(1).split('_');
+                    const emotionKey = parts[0];
+                    const verseIndex = parseInt(parts[1]);
+                    if (versesData[emotionKey] && versesData[emotionKey].verses[verseIndex]) {
+                        showVerse(emotionKey, verseIndex);
+                        return;
+                    }
+                }
+                
+                showFeelings();
+            })
+            .catch(error => {
+                console.error('خطأ في تحميل البيانات:', error);
+            });
+
+        // عرض المشاعر (المستوى الأول)
+        function showFeelings() {
+            const feelingsGrid = document.getElementById('feelingsGrid');
+            const versesList = document.getElementById('versesList');
+            const verseContent = document.getElementById('verseContent');
+            const searchSection = document.getElementById('searchSection');
+            
+            feelingsGrid.style.display = 'grid';
+            versesList.style.display = 'none';
+            verseContent.style.display = 'none';
+            searchSection.style.display = 'block';
+            
+            document.getElementById('pageTitle').textContent = 'آيات المشاعر';
+            document.getElementById('pageSubtitle').textContent = 'Verses of Emotions';
+            document.getElementById('backBtn').href = 'index.html';
+            document.getElementById('backText').textContent = 'العودة للرئيسية';
+            
+            const emotions = [
+                { key: 'happy', name_ar: 'سعيد', name_en: 'Happy', icon: '<i class="fas fa-star-and-crescent"></i>', color: '#FFD700' },
+                { key: 'angry', name_ar: 'الغضب', name_en: 'Angry', icon: '<i class="fas fa-mosque"></i>', color: '#FF5722' },
+                { key: 'sad', name_ar: 'حزن', name_en: 'Sad', icon: '<i class="fas fa-cloud-rain"></i>', color: '#2196F3' },
+                { key: 'alone', name_ar: 'وحدة', name_en: 'Alone', icon: '<i class="fas fa-moon"></i>', color: '#9C27B0' },
+                { key: 'penitent', name_ar: 'الندم', name_en: 'Penitent', icon: '<i class="fas fa-hands-praying"></i>', color: '#795548' },
+                { key: 'afraid', name_ar: 'الخوف', name_en: 'Afraid', icon: '<i class="fas fa-kaaba"></i>', color: '#FF9800' },
+                { key: 'lost', name_ar: 'تائه', name_en: 'Lost', icon: '<i class="fas fa-compass"></i>', color: '#607D8B' },
+                { key: 'message', name_ar: 'رسالة', name_en: 'Message', icon: '<i class="fas fa-dharmachakra"></i>', color: '#E91E63' }
+            ];
+            
+            feelingsGrid.innerHTML = emotions.map(emotion => {
+                const data = versesData[emotion.key];
+                return `
+                    <a href="#" onclick="showVersesList('${emotion.key}'); return false;" class="feeling-card" style="--feeling-color: ${emotion.color}">
+                        <div class="feeling-icon" style="color: ${emotion.color}">${emotion.icon}</div>
+                        <div class="feeling-content">
+                            <div class="feeling-title">${emotion.name_ar}</div>
+                            <div class="feeling-title-en">${emotion.name_en}</div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        // عرض قائمة الآيات (المستوى الثاني) - بدون معاينة
+        function showVersesList(emotionKey) {
+            currentEmotion = emotionKey;
+            const data = versesData[emotionKey];
+            
+            const feelingsGrid = document.getElementById('feelingsGrid');
+            const versesList = document.getElementById('versesList');
+            const verseContent = document.getElementById('verseContent');
+            const searchSection = document.getElementById('searchSection');
+            
+            feelingsGrid.style.display = 'none';
+            versesList.style.display = 'grid';
+            verseContent.style.display = 'none';
+            searchSection.style.display = 'block';
+            
+            document.getElementById('pageTitle').textContent = 'آيات ' + data.name_ar;
+            document.getElementById('pageSubtitle').textContent = 'Verses of ' + data.name_en;
+            document.getElementById('backBtn').href = '#';
+            document.getElementById('backBtn').onclick = function() { showFeelings(); return false; };
+            document.getElementById('backText').textContent = 'العودة لآيات المشاعر';
+            
+            versesList.innerHTML = data.verses.map((verse, index) => {
+                return `
+                    <a href="#" onclick="showVerse('${emotionKey}', ${index}); return false;" class="verse-item">
+                        <div class="verse-item-title">${escapeHtml(verse.name)}</div>
+                    </a>
+                `;
+            }).join('');
+            
+            window.scrollTo(0, 0);
+        }
+
+        // عرض الآية الكاملة (المستوى الثالث)
+        function showVerse(emotionKey, verseIndex) {
+            currentEmotion = emotionKey;
+            currentVerseIndex = verseIndex;
+            
+            const data = versesData[emotionKey];
+            const verse = data.verses[verseIndex];
+            
+            const feelingsGrid = document.getElementById('feelingsGrid');
+            const versesList = document.getElementById('versesList');
+            const verseContent = document.getElementById('verseContent');
+            const searchSection = document.getElementById('searchSection');
+            
+            feelingsGrid.style.display = 'none';
+            versesList.style.display = 'none';
+            verseContent.style.display = 'block';
+            searchSection.style.display = 'none';
+            
+            document.getElementById('pageTitle').textContent = verse.name;
+            document.getElementById('pageSubtitle').textContent = data.name_en + ' Verse';
+            document.getElementById('backBtn').href = '#';
+            document.getElementById('backBtn').onclick = function() { showVersesList(emotionKey); return false; };
+            document.getElementById('backText').textContent = 'العودة لقائمة ' + data.name_ar;
+            
+            // نص الآية
+            document.getElementById('verseText').textContent = verse.text;
+            
+            // التفسير
+            const tafsirParagraphs = verse.tafsir_ar.split('\n\n').filter(p => p.trim());
+            document.getElementById('tafsirContent').innerHTML = tafsirParagraphs.map(p => 
+                `<p>${escapeHtml(p.trim())}</p>`
+            ).join('');
+            
+            // الترجمة الإنجليزية
+            const englishParts = verse.english.split('\n\n').filter(p => p.trim());
+            document.getElementById('englishContent').innerHTML = englishParts.map(part => {
+                part = part.trim();
+                if (part.startsWith('Allah says:') || part.includes('﴿') || part.includes('[')) {
+                    return `<p class="english-verse">${escapeHtml(part)}</p>`;
+                } else {
+                    return `<p>${escapeHtml(part)}</p>`;
+                }
+            }).join('');
+            
+            // تحديث زر المفضلة
+            updateFavoriteButton();
+            
+            window.scrollTo(0, 0);
+        }
+
+        // البحث في الآيات
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            
+            if (!searchTerm) {
+                showFeelings();
+                return;
+            }
+            
+            const feelingsGrid = document.getElementById('feelingsGrid');
+            const versesList = document.getElementById('versesList');
+            const verseContent = document.getElementById('verseContent');
+            
+            feelingsGrid.style.display = 'none';
+            versesList.style.display = 'grid';
+            verseContent.style.display = 'none';
+            
+            document.getElementById('pageTitle').textContent = 'نتائج البحث';
+            document.getElementById('pageSubtitle').textContent = 'Search Results';
+            document.getElementById('backBtn').href = '#';
+            document.getElementById('backBtn').onclick = function() { showFeelings(); return false; };
+            document.getElementById('backText').textContent = 'العودة لآيات المشاعر';
+            
+            let results = [];
+            
+            Object.keys(versesData).forEach(emotionKey => {
+                const data = versesData[emotionKey];
+                data.verses.forEach((verse, index) => {
+                    if (verse.name.toLowerCase().includes(searchTerm) ||
+                        verse.text.toLowerCase().includes(searchTerm) ||
+                        verse.tafsir_ar.toLowerCase().includes(searchTerm)) {
+                        results.push({
+                            emotionKey: emotionKey,
+                            index: index,
+                            verse: verse
+                        });
+                    }
+                });
+            });
+            
+            if (results.length === 0) {
+                versesList.innerHTML = '<div style="text-align: center; padding: 40px; color: #fff; font-size: 1.2rem;">لم يتم العثور على نتائج</div>';
+            } else {
+                versesList.innerHTML = results.map(result => {
+                    return `
+                        <a href="#" onclick="showVerse('${result.emotionKey}', ${result.index}); return false;" class="verse-item">
+                            <div class="verse-item-title">${escapeHtml(result.verse.name)}</div>
+                        </a>
+                    `;
+                }).join('');
+            }
+            
+            window.scrollTo(0, 0);
+        }
+
+        // البحث عند الضغط على Enter
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        performSearch();
+                    }
+                });
+            }
+        });
+
+        // إدارة المفضلة
+        function toggleFavorite() {
+            if (!currentEmotion || currentVerseIndex === null) return;
+            
+            const data = versesData[currentEmotion];
+            const verse = data.verses[currentVerseIndex];
+            
+            let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            
+            const favoriteId = `verse_${currentEmotion}_${currentVerseIndex}`;
+            const existingIndex = favorites.findIndex(f => f.id === favoriteId);
+            
+            if (existingIndex !== -1) {
+                // إزالة من المفضلة
+                favorites.splice(existingIndex, 1);
+                showNotification('تم إزالة الآية من المفضلة');
+            } else {
+                // إضافة للمفضلة
+                favorites.push({
+                    id: favoriteId,
+                    type: 'verse',
+                    emotion: data.name_ar,
+                    name: verse.name,
+                    text: verse.text,
+                    emotionKey: currentEmotion,
+                    verseIndex: currentVerseIndex
+                });
+                showNotification('تمت إضافة الآية للمفضلة');
+            }
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            updateFavoriteButton();
+        }
+
+        function updateFavoriteButton() {
+            if (!currentEmotion || currentVerseIndex === null) return;
+            
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const favoriteId = `verse_${currentEmotion}_${currentVerseIndex}`;
+            const isFavorite = favorites.some(f => f.id === favoriteId);
+            
+            const btn = document.getElementById('favoriteBtn');
+            const btnText = document.getElementById('favoriteBtnText');
+            
+            if (isFavorite) {
+                btn.classList.add('active');
+                btnText.textContent = 'إزالة من المفضلة';
+            } else {
+                btn.classList.remove('active');
+                btnText.textContent = 'إضافة للمفضلة';
+            }
+        }
+
+        // تنظيف HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // إظهار الإشعارات
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+
