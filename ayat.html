@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آيات المشاعر - BASIRA IMAN</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- TASK 9: Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-geometric">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="50,5 61,35 93,35 68,57 79,91 50,70 21,91 32,57 7,35 39,35"
+                         fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                <polygon points="50,18 58,40 82,40 63,54 71,78 50,63 29,78 37,54 18,40 42,40"
+                         fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            </svg>
+            <div class="loading-crescent">🌙</div>
+        </div>
+        <div class="loading-text">بصيرة إيمان</div>
+        <div class="loading-sub">BASIRA IMAN · Insight of Faith</div>
+        <div class="loading-dots"><span></span><span></span><span></span></div>
+    </div>
+
+    <!-- TASK 8: Page Transition Overlay -->
+    <div id="page-transition-overlay">
+        <div class="overlay-crescent">🌙</div>
+    </div>
+
+    <!-- TASK 7: Dark / Light Mode Toggle -->
+    <button id="mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark/light mode">
+        <span id="mode-icon">🌙</span>
+        <span class="toggle-tooltip" id="mode-tooltip">Dark Mode</span>
+    </button>
+
+    <!-- النقاط البيضاء المتحركة -->
+    <div class="floating-dots" id="floatingDots"></div>
+
+    <!-- تذكير الصلاة على النبي -->
+    <div class="prayer-reminder">
+        <div class="prayer-ar">صل على النبي محمد 💚</div>
+        <div class="prayer-en">Peace and blessings be upon our Prophet Muhammad</div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <!-- TASK 5: Improved back button -->
+        <header class="page-header">
+            <a href="index.html" class="back-btn nav-link" id="backBtn">
+                <i class="fas fa-arrow-right"></i>
+                <span id="backText">
+                    <span class="back-btn-ar">العودة للرئيسية</span>
+                    <span class="back-btn-en">Back to Home</span>
+                </span>
+            </a>
+            <div class="page-title">
+                <h1 class="title-ar" id="pageTitle">آيات المشاعر</h1>
+                <p class="title-en" id="pageSubtitle">Verses of Emotions</p>
+            </div>
+        </header>
+
+        <!-- TASK 3: Improved search bar with live search + clear -->
+        <section class="search-section" id="searchSection" style="display:none;">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input"
+                       placeholder="ابحث في الآيات... / Search verses..."
+                       oninput="liveSearch(this.value)"
+                       onkeydown="if(event.key==='Enter') performSearch()">
+                <button class="search-clear" id="searchClear" onclick="clearSearch()" title="مسح / Clear">
+                    <i class="fas fa-times"></i>
+                </button>
+                <button class="search-btn" onclick="performSearch()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Level 1: Emotions grid -->
+        <div class="feelings-grid" id="feelingsGrid"></div>
+
+        <!-- Level 2: Verses list -->
+        <div class="verses-list" id="versesList" style="display:none;"></div>
+
+        <!-- Level 3: Full verse content -->
+        <main class="verse-content" id="verseContent" style="display:none;">
+            <section class="verse-section">
+                <div class="verse-header" id="verseHeader">
+                    <h2>نص الآية الكريمة</h2>
+                    <div class="verse-actions">
+                        <button onclick="toggleFavorite()" class="action-btn favorite-btn" id="favoriteBtn">
+                            <i class="fas fa-heart"></i>
+                            <span id="favoriteBtnText">إضافة للمفضلة</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="verse-text-container" id="verseTextContainer">
+                    <p class="verse-text" id="verseText"></p>
+                </div>
+            </section>
+            <section class="interpretation-section">
+                <div class="section-header">
+                    <h2>التفسير والشرح</h2>
+                    <div class="section-icon"><i class="fas fa-book-open"></i></div>
+                </div>
+                <div class="interpretation-content" id="tafsirContent"></div>
+            </section>
+            <section class="english-section">
+                <div class="section-header">
+                    <h2>English Translation &amp; Commentary</h2>
+                    <div class="section-icon"><i class="fas fa-globe"></i></div>
+                </div>
+                <div class="english-content" id="englishContent"></div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+    // ── Loading Screen ──────────────────────────────────────────
+    window.addEventListener('load', function () {
+        setTimeout(() => document.getElementById('loading-screen').classList.add('hidden'), 900);
+    });
+
+    // ── Floating dots ───────────────────────────────────────────
+    (function () {
+        const c = document.getElementById('floatingDots');
+        for (let i = 0; i < 30; i++) {
+            const d = document.createElement('div');
+            d.className = 'dot';
+            d.style.left = Math.random() * 100 + '%';
+            d.style.animationDuration = (10 + Math.random() * 10) + 's';
+            d.style.animationDelay = Math.random() * 5 + 's';
+            const s = 3 + Math.random() * 3;
+            d.style.width = s + 'px'; d.style.height = s + 'px';
+            c.appendChild(d);
+        }
+    })();
+
+    // ── Dark Mode ───────────────────────────────────────────────
+    function applyDarkMode(isDark) {
+        document.body.classList.toggle('dark-mode', isDark);
+        document.getElementById('mode-icon').textContent = isDark ? '☀️' : '🌙';
+        document.getElementById('mode-tooltip').textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    }
+    function toggleDarkMode() {
+        const isDark = !document.body.classList.contains('dark-mode');
+        localStorage.setItem('basira-dark-mode', isDark ? '1' : '0');
+        applyDarkMode(isDark);
+    }
+    (function () {
+        if (localStorage.getItem('basira-dark-mode') === '1') applyDarkMode(true);
+    })();
+
+    // ── Page Transitions ────────────────────────────────────────
+    function navigateTo(url) {
+        document.getElementById('page-transition-overlay').classList.add('fade-in');
+        setTimeout(() => window.location.href = url, 380);
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('a.nav-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('http')) {
+                    e.preventDefault();
+                    navigateTo(href);
+                }
+            });
+        });
+    });
+
+    // ── TASK 4: Emotion colour palette ─────────────────────────
+    // Each emotion key maps to a colour that is applied dynamically
+    // to the verse border, header accent, and English quote border.
+    const EMOTION_COLORS = {
+        happy:   '#F9C74F',   // warm gold — joy, warmth
+        anger:   '#EF233C',   // vivid red — intensity
+        sad:     '#4895EF',   // calm blue — sorrow
+        lonely:  '#9B5DE5',   // soft purple — isolation
+        regret:  '#F97316',   // amber-orange — reflection
+        fear:    '#6C8EAD',   // steel blue-grey — unease
+        lost:    '#5E548E',   // deep indigo — searching
+        message: '#2DC653',   // vibrant green — hope & guidance
+    };
+
+    // Feeling card colours (matching palette)
+    const FEELING_CARD_COLORS = {
+        happy:   '#F9C74F',
+        anger:   '#EF233C',
+        sad:     '#4895EF',
+        lonely:  '#9B5DE5',
+        regret:  '#F97316',
+        fear:    '#6C8EAD',
+        lost:    '#5E548E',
+        message: '#2DC653',
+    };
+
+    // Apply emotion colour to verse display elements
+    function applyEmotionColor(emotionKey) {
+        const color = EMOTION_COLORS[emotionKey] || '#4CAF50';
+        const container = document.getElementById('verseTextContainer');
+        const header    = document.getElementById('verseHeader');
+        // Set CSS custom property so style.css picks it up
+        container.style.setProperty('--current-emotion-color', color);
+        header.style.setProperty('--current-emotion-color', color);
+        document.documentElement.style.setProperty('--current-emotion-color', color);
+        // Also set .verses-list items' hover colour
+        document.documentElement.style.setProperty('--active-emotion-color', color);
+    }
+
+    // ── Data & State ────────────────────────────────────────────
+    let versesData = null;
+    let currentEmotion = null;
+    let currentVerseIndex = null;
+    let liveSearchTimer = null;
+
+    fetch('verses_data.json')
+        .then(r => r.json())
+        .then(data => {
+            versesData = data;
+            buildFeelingCards();
+            // Deep-link support: #emotionKey_verseIndex
+            const hash = window.location.hash.replace('#', '');
+            if (hash.includes('_')) {
+                const parts = hash.split('_');
+                const eKey  = parts[0];
+                const vIdx  = parseInt(parts[1]);
+                if (versesData[eKey]) {
+                    showVerse(eKey, vIdx);
+                }
+            }
+        })
+        .catch(err => console.error('Error loading verses:', err));
+
+    // ── Level 1: Feeling Cards ──────────────────────────────────
+    const FEELING_META = {
+        happy:   { ar: 'سعيد',  en: 'Happy',       icon: '😊' },
+        anger:   { ar: 'الغضب', en: 'Anger',        icon: '😤' },
+        sad:     { ar: 'حزن',   en: 'Sadness',      icon: '😢' },
+        lonely:  { ar: 'وحدة',  en: 'Loneliness',  icon: '🌧️' },
+        regret:  { ar: 'الندم', en: 'Regret',       icon: '😔' },
+        fear:    { ar: 'الخوف', en: 'Fear',         icon: '😰' },
+        lost:    { ar: 'تائه',  en: 'Lost',         icon: '🌀' },
+        message: { ar: 'رسالة', en: 'Message',      icon: '💌' },
+    };
+
+    function buildFeelingCards() {
+        const grid = document.getElementById('feelingsGrid');
+        const keys = Object.keys(versesData);
+        grid.innerHTML = keys.map(key => {
+            const meta  = FEELING_META[key] || { ar: key, en: key, icon: '✨' };
+            const color = FEELING_CARD_COLORS[key] || '#4CAF50';
+            const count = (versesData[key] && versesData[key].verses)
+                ? versesData[key].verses.length
+                : (Array.isArray(versesData[key]) ? versesData[key].length : '');
+            return `
+                <a href="#" onclick="showVersesList('${key}'); return false;"
+                   class="feeling-card"
+                   style="--feeling-color:${color}">
+                    <div class="feeling-icon">${meta.icon}</div>
+                    <div class="feeling-content">
+                        <div class="feeling-title">${meta.ar}</div>
+                        <div class="feeling-title-en">${meta.en}</div>
+                    </div>
+                </a>`;
+        }).join('');
+    }
+
+    // ── Level 2: Verses List ────────────────────────────────────
+    function showVersesList(emotionKey, highlightTerm) {
+        currentEmotion = emotionKey;
+        const color  = EMOTION_COLORS[emotionKey] || '#4CAF50';
+        const meta   = FEELING_META[emotionKey] || { ar: emotionKey, en: emotionKey };
+        const group  = versesData[emotionKey];
+        const verses = group ? (group.verses || group) : [];
+
+        document.getElementById('feelingsGrid').style.display = 'none';
+        document.getElementById('verseContent').style.display = 'none';
+        document.getElementById('searchSection').style.display = 'block';
+        const list = document.getElementById('versesList');
+        list.style.display = 'flex';
+
+        // Apply emotion colour to list item hover
+        document.documentElement.style.setProperty('--active-emotion-color', color);
+
+        document.getElementById('pageTitle').textContent    = meta.ar;
+        document.getElementById('pageSubtitle').textContent = meta.en;
+
+        setBackBtn('emotions');
+
+        list.innerHTML = verses.map((verse, idx) => {
+            const name = verse.surah_name || verse.name || `آية ${idx + 1}`;
+            const title = highlightTerm
+                ? highlightMatch(escapeHtml(name), highlightTerm)
+                : escapeHtml(name);
+            return `<a href="#" onclick="showVerse('${emotionKey}', ${idx}); return false;"
+                       class="verse-item" style="--active-emotion-color:${color}">
+                        <div class="verse-item-title">${title}</div>
+                    </a>`;
+        }).join('');
+
+        window.scrollTo(0, 0);
+    }
+
+    // ── Level 3: Full Verse ─────────────────────────────────────
+    function showVerse(emotionKey, verseIdx) {
+        currentEmotion    = emotionKey;
+        currentVerseIndex = verseIdx;
+
+        const group  = versesData[emotionKey];
+        const verses = group ? (group.verses || group) : [];
+        const verse  = verses[verseIdx];
+        if (!verse) return;
+
+        document.getElementById('feelingsGrid').style.display  = 'none';
+        document.getElementById('versesList').style.display    = 'none';
+        document.getElementById('searchSection').style.display = 'none';
+        document.getElementById('verseContent').style.display  = 'block';
+
+        // TASK 4: Apply emotion-matched colour
+        applyEmotionColor(emotionKey);
+
+        const meta = FEELING_META[emotionKey] || { ar: emotionKey, en: emotionKey };
+        document.getElementById('pageTitle').textContent    = verse.surah_name || verse.name || meta.ar;
+        document.getElementById('pageSubtitle').textContent = meta.en + ' · Verse';
+
+        setBackBtn('verses', emotionKey);
+
+        // Verse text
+        document.getElementById('verseText').textContent =
+            verse.verse_text || verse.text || '';
+
+        // Arabic tafsir
+        const tafsirRaw = verse.tafsir_ar || verse.tafsir || '';
+        const tafsirParas = tafsirRaw.split('\n\n').filter(p => p.trim());
+        document.getElementById('tafsirContent').innerHTML =
+            tafsirParas.map(p => `<p>${escapeHtml(p.trim())}</p>`).join('') ||
+            '<p style="color:#999;font-style:italic;">لا يوجد تفسير متاح</p>';
+
+        // English
+        const engRaw = verse.english || verse.translation || '';
+        const engParas = engRaw.split('\n\n').filter(p => p.trim());
+        document.getElementById('englishContent').innerHTML =
+            engParas.map(p => {
+                p = p.trim();
+                const cls = (p.match(/^\[|^\(|^"/) || p.includes('(Quran')) ? ' class="english-verse"' : '';
+                return `<p${cls}>${escapeHtml(p)}</p>`;
+            }).join('') ||
+            '<p style="color:#999;font-style:italic;">No translation available</p>';
+
+        updateFavoriteButton();
+        window.scrollTo(0, 0);
+    }
+
+    // ── Back Button Logic (Task 5) ──────────────────────────────
+    function setBackBtn(level, emotionKey) {
+        const btn = document.getElementById('backBtn');
+        if (level === 'emotions') {
+            // From verses list → back to emotions grid
+            btn.href = '#';
+            btn.classList.remove('nav-link');
+            btn.onclick = function () { showEmotionsGrid(); return false; };
+            document.getElementById('backText').innerHTML =
+                '<span class="back-btn-ar">المشاعر</span><span class="back-btn-en">All Emotions</span>';
+        } else if (level === 'verses') {
+            // From full verse → back to list
+            btn.href = '#';
+            btn.classList.remove('nav-link');
+            btn.onclick = function () { showVersesList(emotionKey); return false; };
+            document.getElementById('backText').innerHTML =
+                '<span class="back-btn-ar">قائمة الآيات</span><span class="back-btn-en">Verses List</span>';
+        } else {
+            // Top-level → back to homepage
+            btn.href = 'index.html';
+            btn.classList.add('nav-link');
+            btn.onclick = null;
+            document.getElementById('backText').innerHTML =
+                '<span class="back-btn-ar">العودة للرئيسية</span><span class="back-btn-en">Back to Home</span>';
+        }
+    }
+
+    function showEmotionsGrid() {
+        document.getElementById('feelingsGrid').style.display  = 'flex';
+        document.getElementById('versesList').style.display    = 'none';
+        document.getElementById('verseContent').style.display  = 'none';
+        document.getElementById('searchSection').style.display = 'none';
+        document.getElementById('pageTitle').textContent    = 'آيات المشاعر';
+        document.getElementById('pageSubtitle').textContent = 'Verses of Emotions';
+        setBackBtn('home');
+        clearSearch();
+        window.scrollTo(0, 0);
+    }
+
+    // ── TASK 3: Improved Search for Ayat ───────────────────────
+    function normaliseArabic(str) {
+        return str
+            .replace(/[\u0610-\u061A\u064B-\u065F\u0670]/g, '')
+            .replace(/[أإآ]/g, 'ا')
+            .replace(/ة/g, 'ه')
+            .replace(/ى/g, 'ي')
+            .replace(/\s+/g, ' ')
+            .trim()
+            .toLowerCase();
+    }
+
+    function performSearch() {
+        const raw = document.getElementById('searchInput').value.trim();
+        if (!raw || !versesData) return;
+
+        const normQuery = normaliseArabic(raw);
+        const tokens    = normQuery.split(/\s+/).filter(Boolean);
+        const results   = [];
+
+        Object.keys(versesData).forEach(emotionKey => {
+            const group  = versesData[emotionKey];
+            const verses = group ? (group.verses || group) : [];
+            verses.forEach((verse, idx) => {
+                const fields = [
+                    verse.surah_name || verse.name || '',
+                    verse.verse_text || verse.text || '',
+                    verse.tafsir_ar  || verse.tafsir || '',
+                    verse.english    || verse.translation || ''
+                ].map(normaliseArabic);
+
+                let score = 0;
+                tokens.forEach(tok => {
+                    fields.forEach((f, fi) => {
+                        if (f.includes(tok)) score += (fi === 0 ? 3 : fi === 1 ? 2 : 1);
+                    });
+                });
+                if (score > 0) results.push({ verse, emotionKey, idx, score });
+            });
+        });
+
+        results.sort((a, b) => b.score - a.score);
+
+        // Show results as a flat list
+        document.getElementById('feelingsGrid').style.display  = 'none';
+        document.getElementById('verseContent').style.display  = 'none';
+        const list = document.getElementById('versesList');
+        list.style.display = 'flex';
+        document.getElementById('pageTitle').textContent    = 'نتائج البحث';
+        document.getElementById('pageSubtitle').textContent = `Search Results (${results.length})`;
+
+        const btn = document.getElementById('backBtn');
+        btn.href = '#';
+        btn.classList.remove('nav-link');
+        btn.onclick = function () { showEmotionsGrid(); return false; };
+        document.getElementById('backText').innerHTML =
+            '<span class="back-btn-ar">المشاعر</span><span class="back-btn-en">All Emotions</span>';
+
+        if (results.length === 0) {
+            list.innerHTML = '<div style="text-align:center;padding:40px;color:#fff;font-size:1.1rem;">لم يتم العثور على نتائج · No results found</div>';
+        } else {
+            const color = '#4CAF50';
+            list.innerHTML = results.map(({ verse, emotionKey, idx }) => {
+                const meta = FEELING_META[emotionKey] || { ar: emotionKey };
+                const name = verse.surah_name || verse.name || `آية ${idx + 1}`;
+                const title = highlightMatch(escapeHtml(name), normQuery);
+                const eColor = EMOTION_COLORS[emotionKey] || color;
+                return `<a href="#" onclick="showVerse('${emotionKey}', ${idx}); return false;"
+                           class="verse-item" style="--active-emotion-color:${eColor}">
+                            <div class="verse-item-title">${title}</div>
+                            <div style="font-size:0.7rem;color:#888;font-family:'Roboto',sans-serif;margin-top:3px;text-align:right;">${meta.ar}</div>
+                        </a>`;
+            }).join('');
+        }
+        window.scrollTo(0, 0);
+    }
+
+    function liveSearch(value) {
+        document.getElementById('searchClear').classList.toggle('visible', value.length > 0);
+        clearTimeout(liveSearchTimer);
+        if (!value.trim()) {
+            if (versesData) {
+                // Return to wherever we were
+                if (currentEmotion) showVersesList(currentEmotion);
+                else showEmotionsGrid();
+            }
+            return;
+        }
+        liveSearchTimer = setTimeout(() => performSearch(), 300);
+    }
+
+    function clearSearch() {
+        const input = document.getElementById('searchInput');
+        input.value = '';
+        document.getElementById('searchClear').classList.remove('visible');
+    }
+
+    function highlightMatch(html, term) {
+        if (!term) return html;
+        const toks = term.split(/\s+/).filter(Boolean);
+        let result = html;
+        toks.forEach(tok => {
+            const safe = tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            result = result.replace(new RegExp(safe, 'gi'),
+                m => `<mark class="search-match">${m}</mark>`);
+        });
+        return result;
+    }
+
+    // ── Favourites ──────────────────────────────────────────────
+    function toggleFavorite() {
+        if (!currentEmotion || currentVerseIndex === null) return;
+        const group  = versesData[currentEmotion];
+        const verses = group ? (group.verses || group) : [];
+        const verse  = verses[currentVerseIndex];
+        if (!verse) return;
+
+        let favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+        const fid = `verse_${currentEmotion}_${currentVerseIndex}`;
+        const idx = favs.findIndex(f => f.id === fid);
+
+        if (idx !== -1) {
+            favs.splice(idx, 1);
+            showNotification('تم إزالة الآية من المفضلة');
+        } else {
+            favs.push({
+                id: fid,
+                type: 'verse',
+                name: verse.surah_name || verse.name || currentEmotion,
+                text: verse.verse_text || verse.text || '',
+                emotion: FEELING_META[currentEmotion] ? FEELING_META[currentEmotion].ar : currentEmotion,
+                emotionKey: currentEmotion,
+                verseIndex: currentVerseIndex
+            });
+            showNotification('تمت إضافة الآية للمفضلة');
+        }
+        localStorage.setItem('favorites', JSON.stringify(favs));
+        updateFavoriteButton();
+    }
+
+    function updateFavoriteButton() {
+        if (!currentEmotion || currentVerseIndex === null) return;
+        const fid   = `verse_${currentEmotion}_${currentVerseIndex}`;
+        const favs  = JSON.parse(localStorage.getItem('favorites') || '[]');
+        const isFav = favs.some(f => f.id === fid);
+        document.getElementById('favoriteBtn').classList.toggle('active', isFav);
+        document.getElementById('favoriteBtnText').textContent = isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة';
+    }
+
+    function escapeHtml(text) {
+        const d = document.createElement('div');
+        d.textContent = text;
+        return d.innerHTML;
+    }
+
+    function showNotification(msg) {
+        const n = document.createElement('div');
+        n.className = 'notification';
+        n.textContent = msg;
+        document.body.appendChild(n);
+        setTimeout(() => n.classList.add('show'), 100);
+        setTimeout(() => {
+            n.classList.remove('show');
+            setTimeout(() => document.body.removeChild(n), 300);
+        }, 3000);
+    }
+    </script>
+</body>
+</html>

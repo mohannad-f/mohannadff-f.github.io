@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وصايا النبي - BASIRA IMAN</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- TASK 9: Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-geometric">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="50,5 61,35 93,35 68,57 79,91 50,70 21,91 32,57 7,35 39,35"
+                         fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                <polygon points="50,18 58,40 82,40 63,54 71,78 50,63 29,78 37,54 18,40 42,40"
+                         fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            </svg>
+            <div class="loading-crescent">🌙</div>
+        </div>
+        <div class="loading-text">بصيرة إيمان</div>
+        <div class="loading-sub">BASIRA IMAN · Insight of Faith</div>
+        <div class="loading-dots"><span></span><span></span><span></span></div>
+    </div>
+
+    <!-- TASK 8: Page Transition Overlay -->
+    <div id="page-transition-overlay">
+        <div class="overlay-crescent">🌙</div>
+    </div>
+
+    <!-- TASK 7: Dark / Light Mode Toggle -->
+    <button id="mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark/light mode">
+        <span id="mode-icon">🌙</span>
+        <span class="toggle-tooltip" id="mode-tooltip">Dark Mode</span>
+    </button>
+
+    <!-- النقاط البيضاء المتحركة -->
+    <div class="floating-dots" id="floatingDots"></div>
+
+    <!-- تذكير الصلاة على النبي -->
+    <div class="prayer-reminder">
+        <div class="prayer-ar">صل على النبي محمد 💚</div>
+        <div class="prayer-en">Peace and blessings be upon our Prophet Muhammad</div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <!-- رأس الصفحة -->
+        <header class="page-header">
+            <!-- TASK 5: Improved back button -->
+            <a href="index.html" class="back-btn nav-link" id="backBtn">
+                <i class="fas fa-arrow-right"></i>
+                <span id="backText">
+                    <span class="back-btn-ar">العودة للرئيسية</span>
+                    <span class="back-btn-en">Back to Home</span>
+                </span>
+            </a>
+            <div class="page-title">
+                <h1 class="title-ar" id="pageTitle">وصايا النبي</h1>
+                <p class="title-en" id="pageSubtitle">Prophet's Teachings</p>
+            </div>
+        </header>
+
+        <!-- TASK 3: Improved search bar with live search + clear button -->
+        <section class="search-section" id="searchSection">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input"
+                       placeholder="ابحث في الأحاديث... / Search hadiths..."
+                       oninput="liveSearch(this.value)"
+                       onkeydown="if(event.key==='Enter') performSearch()">
+                <button class="search-clear" id="searchClear" onclick="clearSearch()" title="Clear / مسح">
+                    <i class="fas fa-times"></i>
+                </button>
+                <button class="search-btn" onclick="performSearch()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- قائمة الأحاديث -->
+        <div class="verses-list" id="hadithsList"></div>
+
+        <!-- محتوى الحديث -->
+        <main class="verse-content" id="hadithContent" style="display:none;">
+            <section class="verse-section">
+                <div class="verse-header">
+                    <h2>نص الحديث الشريف</h2>
+                    <div class="verse-actions">
+                        <button onclick="toggleFavorite()" class="action-btn favorite-btn" id="favoriteBtn">
+                            <i class="fas fa-heart"></i>
+                            <span id="favoriteBtnText">إضافة للمفضلة</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="verse-text-container">
+                    <p class="verse-text" id="hadithText"></p>
+                </div>
+            </section>
+            <section class="interpretation-section">
+                <div class="section-header">
+                    <h2>التفسير والشرح</h2>
+                    <div class="section-icon"><i class="fas fa-book-open"></i></div>
+                </div>
+                <div class="interpretation-content" id="tafsirContent"></div>
+            </section>
+            <section class="english-section">
+                <div class="section-header">
+                    <h2>English Translation &amp; Commentary</h2>
+                    <div class="section-icon"><i class="fas fa-globe"></i></div>
+                </div>
+                <div class="english-content" id="englishContent"></div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+    // ── Loading Screen ───────────────────────────────
+    window.addEventListener('load', function () {
+        setTimeout(() => document.getElementById('loading-screen').classList.add('hidden'), 900);
+    });
+
+    // ── Floating dots ────────────────────────────────
+    (function () {
+        const c = document.getElementById('floatingDots');
+        for (let i = 0; i < 30; i++) {
+            const d = document.createElement('div');
+            d.className = 'dot';
+            d.style.left = Math.random() * 100 + '%';
+            d.style.animationDuration = (10 + Math.random() * 10) + 's';
+            d.style.animationDelay = Math.random() * 5 + 's';
+            const s = 3 + Math.random() * 3;
+            d.style.width = s + 'px'; d.style.height = s + 'px';
+            c.appendChild(d);
+        }
+    })();
+
+    // ── Dark Mode ────────────────────────────────────
+    function applyDarkMode(isDark) {
+        document.body.classList.toggle('dark-mode', isDark);
+        const icon = document.getElementById('mode-icon');
+        const tip  = document.getElementById('mode-tooltip');
+        icon.textContent = isDark ? '☀️' : '🌙';
+        tip.textContent  = isDark ? 'Light Mode' : 'Dark Mode';
+    }
+    function toggleDarkMode() {
+        const isDark = !document.body.classList.contains('dark-mode');
+        localStorage.setItem('basira-dark-mode', isDark ? '1' : '0');
+        applyDarkMode(isDark);
+    }
+    (function () {
+        if (localStorage.getItem('basira-dark-mode') === '1') applyDarkMode(true);
+    })();
+
+    // ── Page Transitions ─────────────────────────────
+    function navigateTo(url) {
+        const overlay = document.getElementById('page-transition-overlay');
+        overlay.classList.add('fade-in');
+        setTimeout(() => window.location.href = url, 380);
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('a.nav-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('http')) {
+                    e.preventDefault();
+                    navigateTo(href);
+                }
+            });
+        });
+    });
+
+    // ── Data & State ──────────────────────────────────
+    let hadithsData = null;
+    let currentHadithId = null;
+    let liveSearchTimer = null;
+
+    fetch('hadith_data.json')
+        .then(r => r.json())
+        .then(data => {
+            hadithsData = data.hadiths;
+            showHadithsList();
+            const hash = window.location.hash;
+            if (hash.startsWith('#hadith_')) {
+                showHadith(parseInt(hash.replace('#hadith_', '')) - 1);
+            }
+        })
+        .catch(err => console.error('Error loading data:', err));
+
+    // ── List View ─────────────────────────────────────
+    function showHadithsList(filteredData, highlightTerm) {
+        const list   = document.getElementById('hadithsList');
+        const content = document.getElementById('hadithContent');
+        const search = document.getElementById('searchSection');
+
+        list.style.display = 'flex';
+        content.style.display = 'none';
+        search.style.display = 'block';
+
+        document.getElementById('pageTitle').textContent    = 'وصايا النبي';
+        document.getElementById('pageSubtitle').textContent = "Prophet's Teachings";
+        const btn = document.getElementById('backBtn');
+        btn.href = 'index.html';
+        btn.classList.add('nav-link');
+        btn.onclick = null;
+        document.getElementById('backText').innerHTML =
+            '<span class="back-btn-ar">العودة للرئيسية</span><span class="back-btn-en">Back to Home</span>';
+
+        const source = filteredData || hadithsData;
+        if (!source) return;
+
+        list.innerHTML = source.map((hadith, index) => {
+            const realIndex = filteredData ? hadith._index : index;
+            const title = highlightTerm
+                ? highlightMatch(escapeHtml(hadith.name), highlightTerm)
+                : escapeHtml(hadith.name);
+            return `<a href="#" onclick="showHadith(${realIndex}); return false;" class="verse-item">
+                        <div class="verse-item-title">${title}</div>
+                    </a>`;
+        }).join('');
+    }
+
+    // ── Hadith Detail View ────────────────────────────
+    function showHadith(idx) {
+        currentHadithId = idx;
+        const hadith = hadithsData[idx];
+
+        document.getElementById('hadithsList').style.display = 'none';
+        document.getElementById('hadithContent').style.display = 'block';
+        document.getElementById('searchSection').style.display = 'none';
+
+        document.getElementById('pageTitle').textContent    = hadith.name;
+        document.getElementById('pageSubtitle').textContent = 'Hadith';
+
+        const btn = document.getElementById('backBtn');
+        btn.href = '#';
+        btn.classList.remove('nav-link');
+        btn.onclick = function () { showHadithsList(); clearSearch(); return false; };
+        document.getElementById('backText').innerHTML =
+            '<span class="back-btn-ar">العودة للأحاديث</span><span class="back-btn-en">Back to List</span>';
+
+        document.getElementById('hadithText').textContent = hadith.hadith_text;
+
+        const tafsir = hadith.tafsir_ar.split('\n\n').filter(p => p.trim());
+        document.getElementById('tafsirContent').innerHTML =
+            tafsir.map(p => `<p>${escapeHtml(p.trim())}</p>`).join('');
+
+        const eng = hadith.english.split('\n\n').filter(p => p.trim());
+        document.getElementById('englishContent').innerHTML = eng.map(part => {
+            part = part.trim();
+            const cls = (part.startsWith('Narrated') || part.includes('(Sahih') || part.includes('['))
+                ? ' class="english-verse"' : '';
+            return `<p${cls}>${escapeHtml(part)}</p>`;
+        }).join('');
+
+        updateFavoriteButton();
+        window.scrollTo(0, 0);
+    }
+
+    // ── TASK 3: Improved Search ───────────────────────
+    // Normalises Arabic text (removes diacritics / tashkeel)
+    // so "قُلُوبُ" matches "قلوب" and vice-versa.
+    function normaliseArabic(str) {
+        return str
+            .replace(/[\u0610-\u061A\u064B-\u065F\u0670]/g, '') // diacritics
+            .replace(/[أإآ]/g, 'ا')
+            .replace(/ة/g, 'ه')
+            .replace(/ى/g, 'ي')
+            .replace(/\s+/g, ' ')
+            .trim()
+            .toLowerCase();
+    }
+
+    function tokenise(str) {
+        // Split on spaces and common punctuation; filter empty
+        return normaliseArabic(str).split(/[\s،,:.؟?!]+/).filter(Boolean);
+    }
+
+    function scoreHadith(hadith, tokens) {
+        const fields = [
+            hadith.name || '',
+            hadith.hadith_text || '',
+            hadith.tafsir_ar || '',
+            hadith.english || ''
+        ].map(f => normaliseArabic(f));
+
+        let score = 0;
+        tokens.forEach(tok => {
+            fields.forEach((field, fi) => {
+                if (field.includes(tok)) {
+                    // Name match = highest weight
+                    const weight = fi === 0 ? 3 : fi === 1 ? 2 : 1;
+                    score += weight;
+                }
+            });
+        });
+        return score;
+    }
+
+    function performSearch() {
+        const raw = document.getElementById('searchInput').value.trim();
+        if (!raw) { showHadithsList(); return; }
+
+        const tokens = tokenise(raw);
+        const results = [];
+
+        hadithsData.forEach((hadith, index) => {
+            const s = scoreHadith(hadith, tokens);
+            if (s > 0) results.push({ ...hadith, _index: index, _score: s });
+        });
+
+        results.sort((a, b) => b._score - a._score);
+
+        const list = document.getElementById('hadithsList');
+        list.style.display = 'flex';
+        document.getElementById('hadithContent').style.display = 'none';
+
+        document.getElementById('pageTitle').textContent    = 'نتائج البحث';
+        document.getElementById('pageSubtitle').textContent = 'Search Results';
+        const btn = document.getElementById('backBtn');
+        btn.href = '#';
+        btn.classList.remove('nav-link');
+        btn.onclick = function () { showHadithsList(); clearSearch(); return false; };
+        document.getElementById('backText').innerHTML =
+            '<span class="back-btn-ar">العودة للأحاديث</span><span class="back-btn-en">Back to List</span>';
+
+        if (results.length === 0) {
+            list.innerHTML = '<div style="text-align:center;padding:40px;color:#fff;font-size:1.1rem;">لم يتم العثور على نتائج · No results found</div>';
+        } else {
+            showHadithsList(results, normaliseArabic(raw));
+        }
+        window.scrollTo(0, 0);
+    }
+
+    // Live search: debounced, triggers after 300ms pause
+    function liveSearch(value) {
+        const clearBtn = document.getElementById('searchClear');
+        clearBtn.classList.toggle('visible', value.length > 0);
+        clearTimeout(liveSearchTimer);
+        if (!value.trim()) { if (hadithsData) showHadithsList(); return; }
+        liveSearchTimer = setTimeout(() => performSearch(), 300);
+    }
+
+    function clearSearch() {
+        const input = document.getElementById('searchInput');
+        input.value = '';
+        document.getElementById('searchClear').classList.remove('visible');
+        if (hadithsData) showHadithsList();
+        input.focus();
+    }
+
+    // Highlight matching text in results
+    function highlightMatch(html, term) {
+        if (!term) return html;
+        const toks = term.split(/\s+/).filter(Boolean);
+        let result = html;
+        toks.forEach(tok => {
+            // Escape regex special chars
+            const safe = tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            result = result.replace(new RegExp(safe, 'gi'),
+                m => `<mark class="search-match">${m}</mark>`);
+        });
+        return result;
+    }
+
+    // ── Favourites ────────────────────────────────────
+    function toggleFavorite() {
+        if (currentHadithId === null) return;
+        const hadith = hadithsData[currentHadithId];
+        let favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+        const fid = `hadith_${hadith.id}`;
+        const idx = favs.findIndex(f => f.id === fid);
+        if (idx !== -1) {
+            favs.splice(idx, 1);
+            showNotification('تم إزالة الحديث من المفضلة');
+        } else {
+            favs.push({ id: fid, type: 'hadith', name: hadith.name, text: hadith.hadith_text, hadithId: hadith.id });
+            showNotification('تمت إضافة الحديث للمفضلة');
+        }
+        localStorage.setItem('favorites', JSON.stringify(favs));
+        updateFavoriteButton();
+    }
+
+    function updateFavoriteButton() {
+        if (currentHadithId === null) return;
+        const hadith = hadithsData[currentHadithId];
+        const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+        const isFav = favs.some(f => f.id === `hadith_${hadith.id}`);
+        document.getElementById('favoriteBtn').classList.toggle('active', isFav);
+        document.getElementById('favoriteBtnText').textContent = isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة';
+    }
+
+    function escapeHtml(text) {
+        const d = document.createElement('div');
+        d.textContent = text;
+        return d.innerHTML;
+    }
+
+    function showNotification(msg) {
+        const n = document.createElement('div');
+        n.className = 'notification';
+        n.textContent = msg;
+        document.body.appendChild(n);
+        setTimeout(() => n.classList.add('show'), 100);
+        setTimeout(() => {
+            n.classList.remove('show');
+            setTimeout(() => document.body.removeChild(n), 300);
+        }, 3000);
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BASIRA IMAN - بصيرة إيمان</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- ══════════════════════════════════════
+         TASK 9: Islamic Loading Screen
+    ══════════════════════════════════════ -->
+    <div id="loading-screen">
+        <div class="loading-geometric">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- 8-pointed star (Islamic geometric) -->
+                <polygon points="50,5 61,35 93,35 68,57 79,91 50,70 21,91 32,57 7,35 39,35"
+                         fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                <polygon points="50,18 58,40 82,40 63,54 71,78 50,63 29,78 37,54 18,40 42,40"
+                         fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            </svg>
+            <div class="loading-crescent">🌙</div>
+        </div>
+        <div class="loading-text">بصيرة إيمان</div>
+        <div class="loading-sub">BASIRA IMAN · Insight of Faith</div>
+        <div class="loading-dots">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         TASK 8: Page Transition Overlay
+    ══════════════════════════════════════ -->
+    <div id="page-transition-overlay">
+        <div class="overlay-crescent">🌙</div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         TASK 7: Dark / Light Mode Toggle
+    ══════════════════════════════════════ -->
+    <button id="mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark/light mode">
+        <span id="mode-icon">🌙</span>
+        <span class="toggle-tooltip" id="mode-tooltip">Dark Mode</span>
+    </button>
+
+    <!-- النقاط البيضاء المتحركة -->
+    <div class="floating-dots" id="floatingDots"></div>
+
+    <!-- تذكير الصلاة على النبي -->
+    <div class="prayer-reminder">
+        <div class="prayer-ar">صل على النبي محمد 💚</div>
+        <div class="prayer-en">Peace and blessings be upon our Prophet Muhammad</div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <!-- عنوان الموقع -->
+        <div class="site-title">
+            <h1 class="site-name">BASIRA IMAN</h1>
+            <div class="site-subtitle">
+                <span class="subtitle-ar">بصيرة إيمان</span>
+                <span class="subtitle-en">Insight of Faith</span>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════════════
+             TASK 6: Verse of the Day
+        ══════════════════════════════════════ -->
+        <div class="votd-section">
+            <div class="votd-card" id="votdCard">
+                <div class="votd-label-ar">آية اليوم</div>
+                <div class="votd-label">Verse of the Day</div>
+                <div class="votd-text" id="votdText">جاري التحميل...</div>
+                <div class="votd-meta" id="votdMeta"></div>
+                <div style="text-align:center;">
+                    <span class="votd-emotion-badge" id="votdBadge"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- الخيارات الرئيسية -->
+        <div class="main-options">
+            <div class="options-container">
+                <a href="ayat.html" class="option-card nav-link">
+                    <div class="option-icon">📖</div>
+                    <div class="option-content">
+                        <div class="option-title-ar">آيات المشاعر</div>
+                        <div class="option-title-en">Verses of Emotions</div>
+                    </div>
+                </a>
+                <a href="hadiths.html" class="option-card nav-link">
+                    <div class="option-icon">✨</div>
+                    <div class="option-content">
+                        <div class="option-title-ar">وصايا النبي</div>
+                        <div class="option-title-en">Prophet's Teachings</div>
+                    </div>
+                </a>
+                <a href="favorites.html" class="option-card nav-link">
+                    <div class="option-icon">💖</div>
+                    <div class="option-content">
+                        <div class="option-title-ar">مفضلتي</div>
+                        <div class="option-title-en">My Favorites</div>
+                    </div>
+                </a>
+                <a href="contact.html" class="option-card nav-link">
+                    <div class="option-icon">📞</div>
+                    <div class="option-content">
+                        <div class="option-title-ar">للتواصل معنا</div>
+                        <div class="option-title-en">Contact Us</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // ══════════════════════════════════════
+    // TASK 9: Loading Screen
+    // ══════════════════════════════════════
+    window.addEventListener('load', function () {
+        const loader = document.getElementById('loading-screen');
+        // Minimum display time: 1.2s feels intentional, not broken
+        setTimeout(function () {
+            loader.classList.add('hidden');
+        }, 1200);
+    });
+
+    // ══════════════════════════════════════
+    // Floating dots
+    // ══════════════════════════════════════
+    function createFloatingDots() {
+        const container = document.getElementById('floatingDots');
+        for (let i = 0; i < 30; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            dot.style.left = Math.random() * 100 + '%';
+            dot.style.animationDuration = (10 + Math.random() * 10) + 's';
+            dot.style.animationDelay = Math.random() * 5 + 's';
+            const size = 3 + Math.random() * 3;
+            dot.style.width = size + 'px';
+            dot.style.height = size + 'px';
+            container.appendChild(dot);
+        }
+    }
+    createFloatingDots();
+
+    // ══════════════════════════════════════
+    // TASK 7: Dark / Light Mode
+    // ══════════════════════════════════════
+    function applyDarkMode(isDark) {
+        document.body.classList.toggle('dark-mode', isDark);
+        const icon = document.getElementById('mode-icon');
+        const tip  = document.getElementById('mode-tooltip');
+        if (isDark) {
+            icon.textContent = '☀️';
+            tip.textContent  = 'Light Mode';
+        } else {
+            icon.textContent = '🌙';
+            tip.textContent  = 'Dark Mode';
+        }
+    }
+    function toggleDarkMode() {
+        const isDark = !document.body.classList.contains('dark-mode');
+        localStorage.setItem('basira-dark-mode', isDark ? '1' : '0');
+        applyDarkMode(isDark);
+    }
+    // Restore preference on load
+    (function () {
+        const saved = localStorage.getItem('basira-dark-mode');
+        if (saved === '1') applyDarkMode(true);
+    })();
+
+    // ══════════════════════════════════════
+    // TASK 8: Smooth Page Transitions
+    // ══════════════════════════════════════
+    function navigateTo(url) {
+        const overlay = document.getElementById('page-transition-overlay');
+        overlay.classList.add('fade-in');
+        setTimeout(function () {
+            window.location.href = url;
+        }, 380);
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('a.nav-link').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('http')) {
+                    e.preventDefault();
+                    navigateTo(href);
+                }
+            });
+        });
+    });
+
+    // ══════════════════════════════════════
+    // TASK 6: Verse of the Day
+    // Uses a deterministic daily seed so everyone
+    // sees the same verse on a given day, and it
+    // changes each new calendar day.
+    // Falls back to a built-in set if JSON is unavailable.
+    // ══════════════════════════════════════
+    const EMOTION_LABELS = {
+        happy:   { ar: 'سعيد',  en: 'Happy'   },
+        anger:   { ar: 'الغضب', en: 'Anger'   },
+        sad:     { ar: 'حزن',   en: 'Sadness' },
+        lonely:  { ar: 'وحدة',  en: 'Loneliness' },
+        regret:  { ar: 'الندم', en: 'Regret'  },
+        fear:    { ar: 'الخوف', en: 'Fear'    },
+        lost:    { ar: 'تائه',  en: 'Lost'    },
+        message: { ar: 'رسالة', en: 'Message' },
+    };
+
+    // Deterministic daily index
+    function getDailyIndex(total) {
+        const now   = new Date();
+        const seed  = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+        // Simple LCG hash
+        let h = seed ^ 0x45d9f3b;
+        h = Math.imul(h ^ (h >>> 16), 0x45d9f3b);
+        h = Math.imul(h ^ (h >>> 16), 0x45d9f3b);
+        h = h ^ (h >>> 16);
+        return Math.abs(h) % total;
+    }
+
+    function renderVOTD(text, emotionKey, surahInfo) {
+        document.getElementById('votdText').textContent = text;
+        const label = EMOTION_LABELS[emotionKey];
+        if (label) {
+            document.getElementById('votdBadge').textContent =
+                label.ar + ' · ' + label.en;
+        }
+        if (surahInfo) {
+            document.getElementById('votdMeta').textContent = surahInfo;
+        }
+    }
+
+    // Try to load from verses_data.json
+    fetch('verses_data.json')
+        .then(r => r.json())
+        .then(data => {
+            // Flatten all verses across all emotions
+            const all = [];
+            const emotions = data.emotions || data; // handle both structures
+            Object.keys(emotions).forEach(function (key) {
+                const group = emotions[key];
+                const verses = group.verses || group;
+                if (Array.isArray(verses)) {
+                    verses.forEach(function (v) {
+                        all.push({ text: v.verse_text || v.text || v, emotionKey: key, surah: v.surah_name || v.name || '' });
+                    });
+                }
+            });
+            if (all.length > 0) {
+                const pick = all[getDailyIndex(all.length)];
+                renderVOTD(pick.text, pick.emotionKey, pick.surah);
+            }
+        })
+        .catch(function () {
+            // Fallback built-in verses
+            const fallback = [
+                { text: 'أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ', emotionKey: 'happy', surah: 'الرعد ٢٨' },
+                { text: 'وَلَا تَهِنُوا وَلَا تَحْزَنُوا وَأَنتُمُ الْأَعْلَوْنَ إِن كُنتُم مُّؤْمِنِينَ', emotionKey: 'sad', surah: 'آل عمران ١٣٩' },
+                { text: 'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا', emotionKey: 'fear', surah: 'الشرح ٥' },
+                { text: 'وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ', emotionKey: 'lonely', surah: 'الحديد ٤' },
+                { text: 'قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ', emotionKey: 'regret', surah: 'الزمر ٥٣' },
+                { text: 'وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ', emotionKey: 'message', surah: 'الطلاق ٣' },
+            ];
+            const pick = fallback[getDailyIndex(fallback.length)];
+            renderVOTD(pick.text, pick.emotionKey, pick.surah);
+        });
+    </script>
+</body>
+</html>

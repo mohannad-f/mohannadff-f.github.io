@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مفضلتي - BASIRA IMAN</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- TASK 9: Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-geometric">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="50,5 61,35 93,35 68,57 79,91 50,70 21,91 32,57 7,35 39,35"
+                         fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                <polygon points="50,18 58,40 82,40 63,54 71,78 50,63 29,78 37,54 18,40 42,40"
+                         fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            </svg>
+            <div class="loading-crescent">🌙</div>
+        </div>
+        <div class="loading-text">بصيرة إيمان</div>
+        <div class="loading-sub">BASIRA IMAN · Insight of Faith</div>
+        <div class="loading-dots"><span></span><span></span><span></span></div>
+    </div>
+
+    <!-- TASK 8: Page Transition Overlay -->
+    <div id="page-transition-overlay">
+        <div class="overlay-crescent">🌙</div>
+    </div>
+
+    <!-- TASK 7: Dark / Light Mode Toggle -->
+    <button id="mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark/light mode">
+        <span id="mode-icon">🌙</span>
+        <span class="toggle-tooltip" id="mode-tooltip">Dark Mode</span>
+    </button>
+
+    <!-- النقاط البيضاء المتحركة -->
+    <div class="floating-dots" id="floatingDots"></div>
+
+    <!-- تذكير الصلاة على النبي -->
+    <div class="prayer-reminder">
+        <div class="prayer-ar">صل على النبي محمد 💚</div>
+        <div class="prayer-en">Peace and blessings be upon our Prophet Muhammad</div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <header class="page-header">
+            <a href="index.html" class="back-btn nav-link">
+                <i class="fas fa-arrow-right"></i>
+                <span>
+                    <span class="back-btn-ar">العودة للرئيسية</span>
+                    <span class="back-btn-en">Back to Home</span>
+                </span>
+            </a>
+            <div class="page-title">
+                <h1 class="title-ar">مفضلتي</h1>
+                <p class="title-en">My Favorites</p>
+            </div>
+        </header>
+
+        <div id="favoritesContainer"></div>
+    </div>
+
+    <script>
+    // ── Loading Screen ─────────────────────────────────────────
+    window.addEventListener('load', function () {
+        setTimeout(() => document.getElementById('loading-screen').classList.add('hidden'), 900);
+    });
+
+    // ── Floating dots ──────────────────────────────────────────
+    (function () {
+        const c = document.getElementById('floatingDots');
+        for (let i = 0; i < 30; i++) {
+            const d = document.createElement('div');
+            d.className = 'dot';
+            d.style.left = Math.random() * 100 + '%';
+            d.style.animationDuration = (10 + Math.random() * 10) + 's';
+            d.style.animationDelay = Math.random() * 5 + 's';
+            const s = 3 + Math.random() * 3;
+            d.style.width = s + 'px'; d.style.height = s + 'px';
+            c.appendChild(d);
+        }
+    })();
+
+    // ── Dark Mode ──────────────────────────────────────────────
+    function applyDarkMode(isDark) {
+        document.body.classList.toggle('dark-mode', isDark);
+        document.getElementById('mode-icon').textContent = isDark ? '☀️' : '🌙';
+        document.getElementById('mode-tooltip').textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    }
+    function toggleDarkMode() {
+        const isDark = !document.body.classList.contains('dark-mode');
+        localStorage.setItem('basira-dark-mode', isDark ? '1' : '0');
+        applyDarkMode(isDark);
+    }
+    (function () {
+        if (localStorage.getItem('basira-dark-mode') === '1') applyDarkMode(true);
+    })();
+
+    // ── Page Transitions ───────────────────────────────────────
+    function navigateTo(url) {
+        document.getElementById('page-transition-overlay').classList.add('fade-in');
+        setTimeout(() => window.location.href = url, 380);
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('a.nav-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('http')) {
+                    e.preventDefault();
+                    navigateTo(href);
+                }
+            });
+        });
+        displayFavorites();
+    });
+
+    // ── Favorites Display ──────────────────────────────────────
+    function displayFavorites() {
+        const container = document.getElementById('favoritesContainer');
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+        if (favorites.length === 0) {
+            container.innerHTML = `
+                <div class="favorites-empty">
+                    <div class="favorites-empty-icon">💔</div>
+                    <div class="favorites-empty-text">لا توجد عناصر في المفضلة</div>
+                    <div class="favorites-empty-hint">No favorites yet — add verses or hadiths from their pages</div>
+                </div>`;
+            return;
+        }
+
+        container.innerHTML = '<div class="favorites-list">' + favorites.map((item, index) => {
+            const typeText = item.type === 'verse' ? 'آية · Verse' : 'حديث · Hadith';
+            const emotionText = item.emotion ? ` — ${item.emotion}` : '';
+            return `
+                <div class="favorite-item">
+                    <div class="favorite-item-header">
+                        <div class="favorite-item-title">${escapeHtml(item.name)}</div>
+                        <div class="favorite-item-type">${typeText}${emotionText}</div>
+                    </div>
+                    <div class="favorite-item-text">${escapeHtml(item.text.substring(0, 200))}${item.text.length > 200 ? '...' : ''}</div>
+                    <div class="favorite-item-actions">
+                        <button onclick="viewItem('${item.type}', '${item.emotionKey || ''}', ${item.verseIndex || 0}, ${item.hadithId || 0})" class="action-btn">
+                            <i class="fas fa-eye"></i> عرض
+                        </button>
+                        <button onclick="removeFavorite(${index})" class="remove-favorite-btn">
+                            <i class="fas fa-trash"></i> حذف
+                        </button>
+                    </div>
+                </div>`;
+        }).join('') + '</div>';
+    }
+
+    function viewItem(type, emotionKey, verseIndex, hadithId) {
+        const url = type === 'verse'
+            ? `ayat.html#${emotionKey}_${verseIndex}`
+            : `hadiths.html#hadith_${hadithId}`;
+        navigateTo(url);
+    }
+
+    function removeFavorite(index) {
+        let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        favorites.splice(index, 1);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        displayFavorites();
+        showNotification('تم الحذف من المفضلة · Removed from favorites');
+    }
+
+    function escapeHtml(text) {
+        const d = document.createElement('div');
+        d.textContent = text;
+        return d.innerHTML;
+    }
+
+    function showNotification(msg) {
+        const n = document.createElement('div');
+        n.className = 'notification';
+        n.textContent = msg;
+        document.body.appendChild(n);
+        setTimeout(() => n.classList.add('show'), 100);
+        setTimeout(() => {
+            n.classList.remove('show');
+            setTimeout(() => document.body.removeChild(n), 300);
+        }, 3000);
+    }
+    </script>
+</body>
+</html>
