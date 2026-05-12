@@ -1,107 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BASIRA IMAN - بصيرة إيمان</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    <!-- النقاط البيضاء المتحركة -->
-    <div class="floating-dots" id="floatingDots"></div>
-
-    <!-- تذكير الصلاة على النبي -->
-    <div class="prayer-reminder">
-        <div class="prayer-ar">صل على النبي محمد 💚</div>
-        <div class="prayer-en">Peace and blessings be upon our Prophet Muhammad</div>
-    </div>
-
-    <!-- المحتوى الرئيسي -->
-    <div class="container">
-        <!-- عنوان الموقع -->
-        <div class="site-title">
-            <h1 class="site-name">BASIRA IMAN</h1>
-            <div class="site-subtitle">
-                <span class="subtitle-ar">بصيرة إيمان</span>
-                <span class="subtitle-en">Insight of Faith</span>
-            </div>
-        </div>
-
-        <!-- الخيارات الرئيسية -->
-        <div class="main-options">
-            <div class="options-container">
-                <!-- آيات المشاعر -->
-                <a href="ayat.html" class="option-card">
-                    <div class="option-icon">📖</div>
-                    <div class="option-content">
-                        <div class="option-title-ar">آيات المشاعر</div>
-                        <div class="option-title-en">Verses of Emotions</div>
-                    </div>
-                </a>
-
-                <!-- وصايا النبي -->
-                <a href="hadiths.html" class="option-card">
-                    <div class="option-icon">✨</div>
-                    <div class="option-content">
-                        <div class="option-title-ar">وصايا النبي</div>
-                        <div class="option-title-en">Prophet's Teachings</div>
-                    </div>
-                </a>
-
-                <!-- مفضلتي -->
-                <a href="favorites.html" class="option-card">
-                    <div class="option-icon">💖</div>
-                    <div class="option-content">
-                        <div class="option-title-ar">مفضلتي</div>
-                        <div class="option-title-en">My Favorites</div>
-                    </div>
-                </a>
-
-                <!-- للتواصل معنا -->
-                <a href="contact.html" class="option-card">
-                    <div class="option-icon">📞</div>
-                    <div class="option-content">
-                        <div class="option-title-ar">للتواصل معنا</div>
-                        <div class="option-title-en">Contact Us</div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // إنشاء النقاط البيضاء المتحركة
-        function createFloatingDots() {
-            const container = document.getElementById('floatingDots');
-            const dotCount = 30; // عدد النقاط
-            
-            for (let i = 0; i < dotCount; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'dot';
-                
-                // موضع عشوائي أفقياً
-                dot.style.left = Math.random() * 100 + '%';
-                
-                // مدة الحركة عشوائية (بين 10 و 20 ثانية)
-                const duration = 10 + Math.random() * 10;
-                dot.style.animationDuration = duration + 's';
-                
-                // تأخير عشوائي للبداية
-                dot.style.animationDelay = Math.random() * 5 + 's';
-                
-                // حجم عشوائي
-                const size = 3 + Math.random() * 3;
-                dot.style.width = size + 'px';
-                dot.style.height = size + 'px';
-                
-                container.appendChild(dot);
-            }
-        }
-        
-        // تشغيل عند تحميل الصفحة
-        window.addEventListener('load', createFloatingDots);
-    </script>
-</body>
-</html>
-
