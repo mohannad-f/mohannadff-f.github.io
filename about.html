@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عن بصيرة إيمان - About Basira Iman</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- شاشة التحميل -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-moon">🌙</div>
+            <div class="loading-stars">
+                <span class="star">✨</span>
+                <span class="star">⭐</span>
+                <span class="star">✨</span>
+            </div>
+            <div class="loading-text">بصيرة إيمان</div>
+            <div class="loading-text-en">BASIRA IMAN</div>
+            <div class="loading-bar">
+                <div class="loading-bar-fill"></div>
+            </div>
+            <div class="loading-subtitle">Insight of Faith</div>
+        </div>
+    </div>
+
+    <!-- النقاط البيضاء المتحركة -->
+    <div class="floating-dots" id="floatingDots"></div>
+
+    <!-- تذكير الصلاة على النبي -->
+    <div class="prayer-reminder">
+        <div class="prayer-ar">صل على النبي محمد 💚</div>
+        <div class="prayer-en">Peace and blessings be upon our Prophet Muhammad</div>
+    </div>
+
+    <!-- زر الوضع الداكن/الفاتح -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="تبديل الوضع | Toggle Theme">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <!-- رأس الصفحة -->
+        <header class="page-header">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-right"></i>
+                <span>العودة للرئيسية</span>
+                <span class="back-btn-en">Back to Home</span>
+            </a>
+            <div class="page-title">
+                <h1 class="title-ar">عن بصيرة إيمان</h1>
+                <p class="title-en">About Basira Iman</p>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="about-hero scroll-reveal">
+            <div class="about-hero-content">
+                <div class="about-hero-icon">🐢</div>
+                <h2 class="about-hero-title">كل هذا لأجلك</h2>
+                <p class="about-hero-title-en">All this was for you</p>
+                <div class="scroll-hint">
+                    <span>استكشف القصة</span>
+                    <span class="scroll-hint-en">Discover the story</span>
+                    <div class="scroll-arrow">↓</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: What Is The Problem? -->
+        <section class="about-section scroll-reveal">
+            <div class="section-number">01</div>
+            <div class="about-section-content">
+                <h2 class="about-section-title">ما المشكلة؟</h2>
+                <p class="about-section-title-en">What is the problem?</p>
+                <div class="about-text-block">
+                    <p class="about-text-ar">نعيش اليوم في زمن أصبح الوصول فيه إلى المعلومات الدينية أسهل من أي وقت مضى، لكن الفهم العميق والتدبر ما زالا يحتاجان إلى وقت وتأمل.</p>
+                    <p class="about-text-en">Today, access to religious knowledge is easier than ever before, yet deep understanding and reflection still require time and contemplation.</p>
+                </div>
+                <div class="about-text-block">
+                    <p class="about-text-ar">نقرأ القرآن، ونسمع الأحاديث والمواعظ، ونتعلم الكثير من المعاني النافعة، لكن كثيرًا منها يمر سريعًا دون أن يأخذ حقه من التفكر والتطبيق.</p>
+                    <p class="about-text-en">We read the Quran, listen to hadiths and reminders, and learn many beneficial meanings, yet many of them pass by quickly without receiving the reflection and application they deserve.</p>
+                </div>
+                <div class="about-text-block">
+                    <p class="about-text-ar">ليست المشكلة في قلة المحتوى، بل في صعوبة التوقف مع المعنى وفهمه وربطه بحياتنا اليومية.</p>
+                    <p class="about-text-en">The problem is not the lack of content, but the difficulty of pausing with a meaning, understanding it deeply, and connecting it to daily life.</p>
+                </div>
+                <div class="about-highlight">
+                    <p class="about-text-ar">ومن هنا بدأت فكرة بصيرة إيمان.</p>
+                    <p class="about-text-en">And from here, the idea of Basira Iman began.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: What Is Basira Iman? -->
+        <section class="about-section scroll-reveal">
+            <div class="section-number">02</div>
+            <div class="about-section-content">
+                <h2 class="about-section-title">ما هي بصيرة إيمان؟</h2>
+                <p class="about-section-title-en">What is Basira Iman?</p>
+                <div class="about-text-block">
+                    <p class="about-text-ar">بصيرة إيمان هي محاولة بسيطة لتقريب المعاني النافعة وجعل التأمل والتدبر جزءًا من الحياة اليومية.</p>
+                    <p class="about-text-en">Basira Iman is a simple attempt to bring beneficial meanings closer and make reflection a part of everyday life.</p>
+                </div>
+                <div class="about-text-block">
+                    <p class="about-text-ar">فبدل أن تبقى الآيات والأحاديث معارف تُقرأ ثم تُنسى، نسعى إلى تقديمها بطريقة تساعد على فهمها والتوقف معها واستحضار أثرها في الواقع.</p>
+                    <p class="about-text-en">Rather than allowing verses and prophetic teachings to remain knowledge that is read and forgotten, we aim to present them in a way that encourages understanding, reflection, and practical impact.</p>
+                </div>
+                <div class="about-text-block">
+                    <p class="about-text-ar">لا تهدف بصيرة إيمان إلى تقديم كل شيء، بل إلى المساعدة على رؤية المعنى بوضوح أكبر، وفتح باب للتفكر والتعلم المستمر.</p>
+                    <p class="about-text-en">Basira Iman does not aim to provide everything. Its purpose is to help people see meanings more clearly and open a door to continuous reflection and learning.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Explore Experiences -->
+        <section class="about-section scroll-reveal">
+            <div class="section-number">03</div>
+            <div class="about-section-content">
+                <h2 class="about-section-title">استكشف التجارب</h2>
+                <p class="about-section-title-en">Explore Experiences</p>
+                <div class="about-text-block">
+                    <p class="about-text-ar">تجارب وأفكار مختلفة نحاول من خلالها تقريب المعاني وجعل التأمل أكثر حضورًا في الحياة اليومية.</p>
+                    <p class="about-text-en">Different experiences and ideas through which we seek to bring meaningful reflection closer to everyday life.</p>
+                </div>
+
+                <div class="experiences-grid">
+                    <a href="jar.html" class="experience-card">
+                        <div class="experience-icon">🫙</div>
+                        <div class="experience-content">
+                            <div class="experience-title-ar">برطمان المشاعر</div>
+                            <div class="experience-title-en">Jar of Feelings</div>
+                            <div class="experience-desc-ar">تجربة تساعد على التوقف مع الآيات والتأمل فيها بطريقة عملية وبسيطة.</div>
+                            <div class="experience-desc-en">An experience designed to help people pause with Quranic verses and reflect upon them in a practical and simple way.</div>
+                        </div>
+                    </a>
+
+                    <div class="experience-card coming-soon">
+                        <div class="experience-icon">🔮</div>
+                        <div class="experience-content">
+                            <div class="experience-title-ar">قريبًا</div>
+                            <div class="experience-title-en">Coming Soon</div>
+                            <div class="experience-desc-ar">أفكار وتجارب جديدة يجري العمل عليها.</div>
+                            <div class="experience-desc-en">New ideas and experiences currently under development.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // شاشة التحميل
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loadingScreen');
+                loadingScreen.classList.add('fade-out');
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 800);
+            }, 1500);
+        });
+
+        // إنشاء النقاط البيضاء المتحركة
+        function createFloatingDots() {
+            const container = document.getElementById('floatingDots');
+            const dotCount = 30;
+            for (let i = 0; i < dotCount; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                dot.style.left = Math.random() * 100 + '%';
+                dot.style.animationDuration = (10 + Math.random() * 10) + 's';
+                dot.style.animationDelay = Math.random() * 5 + 's';
+                const size = 3 + Math.random() * 3;
+                dot.style.width = size + 'px';
+                dot.style.height = size + 'px';
+                container.appendChild(dot);
+            }
+        }
+        window.addEventListener('load', createFloatingDots);
+
+        // الوضع الداكن/الفاتح
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            const isDark = body.classList.toggle('light-mode');
+            if (isDark) {
+                icon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'light');
+            } else {
+                icon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const icon = document.getElementById('themeIcon');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                icon.className = 'fas fa-sun';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadTheme);
+
+        // Scroll reveal animations
+        function initScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', initScrollReveal);
+    </script>
+</body>
+</html>
