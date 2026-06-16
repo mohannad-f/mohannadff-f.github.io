@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برطمان المشاعر - Jar of Feelings - BASIRA IMAN</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- شاشة التحميل -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-moon">🌙</div>
+            <div class="loading-stars">
+                <span class="star">✨</span>
+                <span class="star">⭐</span>
+                <span class="star">✨</span>
+            </div>
+            <div class="loading-text">بصيرة إيمان</div>
+            <div class="loading-text-en">BASIRA IMAN</div>
+            <div class="loading-bar">
+                <div class="loading-bar-fill"></div>
+            </div>
+            <div class="loading-subtitle">Insight of Faith</div>
+        </div>
+    </div>
+
+    <!-- النقاط البيضاء المتحركة -->
+    <div class="floating-dots" id="floatingDots"></div>
+
+    <!-- تذكير الصلاة على النبي -->
+    <div class="prayer-reminder">
+        <div class="prayer-ar">صل على النبي محمد 💚</div>
+        <div class="prayer-en">Peace and blessings be upon our Prophet Muhammad</div>
+    </div>
+
+    <!-- زر الوضع الداكن/الفاتح -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="تبديل الوضع | Toggle Theme">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <!-- رأس الصفحة -->
+        <header class="page-header">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-right"></i>
+                <span>العودة للرئيسية</span>
+                <span class="back-btn-en">Back to Home</span>
+            </a>
+            <div class="page-title">
+                <h1 class="title-ar">برطمان المشاعر</h1>
+                <p class="title-en">Jar of Feelings</p>
+            </div>
+        </header>
+
+        <!-- Navigation Buttons -->
+        <div class="jar-nav-buttons">
+            <a href="index.html" class="jar-nav-btn">
+                <i class="fas fa-home"></i>
+                <span>الصفحة الرئيسية</span>
+                <span class="jar-nav-btn-en">Home</span>
+            </a>
+            <a href="about.html" class="jar-nav-btn">
+                <i class="fas fa-info-circle"></i>
+                <span>عن بصيرة إيمان</span>
+                <span class="jar-nav-btn-en">About Basira Iman</span>
+            </a>
+        </div>
+
+        <!-- Hero Section -->
+        <section class="jar-hero scroll-reveal">
+            <div class="jar-hero-content">
+                <div class="jar-hero-icon">🫙</div>
+                <div class="jar-hero-text">
+                    <p class="jar-hero-ar">أحيانًا لا نبحث عن المزيد من الكلمات...</p>
+                    <p class="jar-hero-ar">بل عن الكلمة التي نحتاجها الآن.</p>
+                    <p class="jar-hero-en">Sometimes we are not looking for more words...</p>
+                    <p class="jar-hero-en">We are looking for the word we need right now.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: The Idea -->
+        <section class="jar-section scroll-reveal">
+            <div class="jar-section-content">
+                <p class="jar-text-ar">جاءت فكرة برطمان المشاعر من رغبة بسيطة:</p>
+                <p class="jar-text-en">The idea of Jar of Feelings came from a simple desire:</p>
+                <div class="jar-highlight">
+                    <p class="jar-text-ar">أن تكون هناك طريقة مختلفة للتوقف مع القرآن والتأمل في معانيه، بعيدًا عن التصفح السريع والقراءة العابرة.</p>
+                    <p class="jar-text-en">To create a different way of pausing with the Quran and reflecting on its meanings, away from fast scrolling and casual reading.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: How It Works -->
+        <section class="jar-section scroll-reveal">
+            <div class="jar-section-content">
+                <div class="section-header-card">
+                    <h2 class="jar-section-title">كيف تعمل التجربة؟</h2>
+                    <p class="jar-section-title-en">How does the experience work?</p>
+                </div>
+
+                <div class="jar-steps">
+                    <!-- Step 1: Open the Jar -->
+                    <div class="jar-step">
+                        <div class="jar-step-icon">
+                            <div class="anim-jar-open">
+                                <div class="jar-body">
+                                    <div class="jar-label">🫙</div>
+                                    <div class="jar-papers">
+                                        <div class="paper p1"></div>
+                                        <div class="paper p2"></div>
+                                        <div class="paper p3"></div>
+                                    </div>
+                                </div>
+                                <div class="jar-lid-anim">
+                                    <div class="lid-top"></div>
+                                    <div class="lid-ring"></div>
+                                </div>
+                                <div class="sparkles">
+                                    <span class="sparkle s1">✨</span>
+                                    <span class="sparkle s2">✨</span>
+                                    <span class="sparkle s3">✨</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jar-step-text">
+                            <div class="jar-step-ar">افتح البرطمان</div>
+                            <div class="jar-step-en">Open the Jar</div>
+                        </div>
+                    </div>
+
+                    <div class="jar-step-connector">
+                        <div class="connector-line"></div>
+                    </div>
+
+                    <!-- Step 2: Pick a Paper -->
+                    <div class="jar-step">
+                        <div class="jar-step-icon">
+                            <div class="anim-pick-paper">
+                                <div class="hand-container">
+                                    <div class="hand">🤚</div>
+                                    <div class="fingers">
+                                        <div class="finger f1"></div>
+                                        <div class="finger f2"></div>
+                                        <div class="finger f3"></div>
+                                    </div>
+                                </div>
+                                <div class="paper-slip">
+                                    <div class="slip-line"></div>
+                                    <div class="slip-line short"></div>
+                                    <div class="slip-icon">📜</div>
+                                </div>
+                                <div class="pick-glow"></div>
+                            </div>
+                        </div>
+                        <div class="jar-step-text">
+                            <div class="jar-step-ar">اختر ورقة</div>
+                            <div class="jar-step-en">Pick a Paper</div>
+                        </div>
+                    </div>
+
+                    <div class="jar-step-connector">
+                        <div class="connector-line"></div>
+                    </div>
+
+                    <!-- Step 3: Scan QR Code -->
+                    <div class="jar-step">
+                        <div class="jar-step-icon">
+                            <div class="anim-scan-qr">
+                                <div class="qr-frame">
+                                    <div class="qr-corner tl"></div>
+                                    <div class="qr-corner tr"></div>
+                                    <div class="qr-corner bl"></div>
+                                    <div class="qr-corner br"></div>
+                                    <div class="qr-grid">
+                                        <div class="qr-dot d1"></div>
+                                        <div class="qr-dot d2"></div>
+                                        <div class="qr-dot d3"></div>
+                                        <div class="qr-dot d4"></div>
+                                        <div class="qr-dot d5"></div>
+                                        <div class="qr-dot d6"></div>
+                                        <div class="qr-dot d7"></div>
+                                        <div class="qr-dot d8"></div>
+                                    </div>
+                                </div>
+                                <div class="scan-line"></div>
+                                <div class="scan-phone">📱</div>
+                            </div>
+                        </div>
+                        <div class="jar-step-text">
+                            <div class="jar-step-ar">امسح رمز QR</div>
+                            <div class="jar-step-en">Scan the QR Code</div>
+                        </div>
+                    </div>
+
+                    <div class="jar-step-connector">
+                        <div class="connector-line"></div>
+                    </div>
+
+                    <!-- Step 4: Open Verse & Explanation -->
+                    <div class="jar-step">
+                        <div class="jar-step-icon">
+                            <div class="anim-open-verse">
+                                <div class="book-container">
+                                    <div class="book-left">
+                                        <div class="book-line bl1"></div>
+                                        <div class="book-line bl2"></div>
+                                        <div class="book-line bl3"></div>
+                                    </div>
+                                    <div class="book-center"></div>
+                                    <div class="book-right">
+                                        <div class="book-line br1"></div>
+                                        <div class="book-line br2"></div>
+                                        <div class="book-line br3"></div>
+                                    </div>
+                                </div>
+                                <div class="verse-glow">
+                                    <span class="glow-text">﴿</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jar-step-text">
+                            <div class="jar-step-ar">انتقل إلى الآية وتفسيرها</div>
+                            <div class="jar-step-en">Open the Verse and Its Explanation</div>
+                        </div>
+                    </div>
+
+                    <div class="jar-step-connector">
+                        <div class="connector-line"></div>
+                    </div>
+
+                    <!-- Step 5: Reflect -->
+                    <div class="jar-step">
+                        <div class="jar-step-icon">
+                            <div class="anim-reflect">
+                                <div class="person-head">
+                                    <div class="face">
+                                        <div class="eye left"></div>
+                                        <div class="eye right"></div>
+                                        <div class="smile"></div>
+                                    </div>
+                                </div>
+                                <div class="thought-bubbles">
+                                    <div class="bubble b1">💭</div>
+                                    <div class="bubble b2">🌙</div>
+                                    <div class="bubble b3">✨</div>
+                                </div>
+                                <div class="calm-aura"></div>
+                            </div>
+                        </div>
+                        <div class="jar-step-text">
+                            <div class="jar-step-ar">خذ لحظة للتأمل</div>
+                            <div class="jar-step-en">Take a Moment to Reflect</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Why Was It Created? -->
+        <section class="jar-section scroll-reveal">
+            <div class="jar-section-content">
+                <h2 class="jar-section-title">لماذا صُمم برطمان المشاعر؟</h2>
+                <p class="jar-section-title-en">Why was Jar of Feelings created?</p>
+                <div class="jar-highlight">
+                    <p class="jar-text-ar">ليس الهدف أن تختار آية عشوائية فحسب.</p>
+                    <p class="jar-text-en">The goal is not simply to pick a random verse.</p>
+                </div>
+                <div class="jar-text-block">
+                    <p class="jar-text-ar">بل أن تمنح نفسك لحظة توقف.</p>
+                    <p class="jar-text-en">The goal is to give yourself a moment to pause.</p>
+                </div>
+                <div class="jar-text-block">
+                    <p class="jar-text-ar">لحظة تبتعد فيها عن سرعة اليوم، وتتأمل معنى قد يكون أقرب إليك مما تتوقع.</p>
+                    <p class="jar-text-en">A moment away from the speed of everyday life, where you can reflect on a meaning that may be closer to you than you realize.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: What Will You Find Inside? -->
+        <section class="jar-section scroll-reveal">
+            <div class="jar-section-content">
+                <h2 class="jar-section-title">ماذا ستجد داخله؟</h2>
+                <p class="jar-section-title-en">What will you find inside?</p>
+                <div class="jar-items">
+                    <div class="jar-item">
+                        <div class="jar-item-icon">📜</div>
+                        <div class="jar-item-text">
+                            <div class="jar-item-ar">آيات مختارة</div>
+                            <div class="jar-item-en">Carefully selected verses</div>
+                        </div>
+                    </div>
+                    <div class="jar-item">
+                        <div class="jar-item-icon">🔗</div>
+                        <div class="jar-item-text">
+                            <div class="jar-item-ar">رموز QR مرتبطة بالموقع</div>
+                            <div class="jar-item-en">QR codes linked to the website</div>
+                        </div>
+                    </div>
+                    <div class="jar-item">
+                        <div class="jar-item-icon">📖</div>
+                        <div class="jar-item-text">
+                            <div class="jar-item-ar">تفسيرات مبسطة</div>
+                            <div class="jar-item-en">Simplified explanations</div>
+                        </div>
+                    </div>
+                    <div class="jar-item">
+                        <div class="jar-item-icon">🤲</div>
+                        <div class="jar-item-text">
+                            <div class="jar-item-ar">مساحة للتأمل والتفكر</div>
+                            <div class="jar-item-en">Space for reflection and contemplation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Section: Contact CTA -->
+        <section class="jar-section scroll-reveal">
+            <div class="jar-section-content jar-cta">
+                <h2 class="jar-section-title">هل ترغب في تجربة برطمان المشاعر؟</h2>
+                <p class="jar-section-title-en">Would you like to experience Jar of Feelings?</p>
+                <button class="jar-contact-btn" onclick="toggleContactExpand()">
+                    <span>تواصل معنا</span>
+                    <span class="jar-contact-btn-en">Contact Us</span>
+                    <i class="fas fa-chevron-down" id="contactChevron"></i>
+                </button>
+
+                <!-- Expandable Contact Section -->
+                <div class="jar-contact-expand" id="jarContactExpand">
+                    <div class="jar-contact-grid">
+                        <a href="https://wa.me/201021937293" target="_blank" class="jar-contact-link whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>واتساب</span>
+                            <span class="jar-contact-link-en">WhatsApp</span>
+                        </a>
+                        <a href="https://www.instagram.com/basira_iman?igsh=MTN1bmZlYnB6M2FjbQ==" target="_blank" class="jar-contact-link instagram">
+                            <i class="fab fa-instagram"></i>
+                            <span>إنستغرام</span>
+                            <span class="jar-contact-link-en">Instagram</span>
+                        </a>
+                        <a href="https://tiktok.com/@basiraiiman" target="_blank" class="jar-contact-link tiktok">
+                            <i class="fab fa-tiktok"></i>
+                            <span>تيك توك</span>
+                            <span class="jar-contact-link-en">TikTok</span>
+                        </a>
+                        <a href="https://www.facebook.com/share/1E5ADXw31s/" target="_blank" class="jar-contact-link facebook">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>فيسبوك</span>
+                            <span class="jar-contact-link-en">Facebook</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // شاشة التحميل
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loadingScreen');
+                loadingScreen.classList.add('fade-out');
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 800);
+            }, 1500);
+        });
+
+        // إنشاء النقاط البيضاء المتحركة
+        function createFloatingDots() {
+            const container = document.getElementById('floatingDots');
+            const dotCount = 30;
+            for (let i = 0; i < dotCount; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                dot.style.left = Math.random() * 100 + '%';
+                dot.style.animationDuration = (10 + Math.random() * 10) + 's';
+                dot.style.animationDelay = Math.random() * 5 + 's';
+                const size = 3 + Math.random() * 3;
+                dot.style.width = size + 'px';
+                dot.style.height = size + 'px';
+                container.appendChild(dot);
+            }
+        }
+        window.addEventListener('load', createFloatingDots);
+
+        // الوضع الداكن/الفاتح
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            const isDark = body.classList.toggle('dark-mode');
+            if (isDark) {
+                icon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const icon = document.getElementById('themeIcon');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                icon.className = 'fas fa-moon';
+            } else {
+                icon.className = 'fas fa-sun';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadTheme);
+
+        // Scroll reveal animations
+        function initScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', initScrollReveal);
+
+        // Expandable contact section
+        function toggleContactExpand() {
+            const expand = document.getElementById('jarContactExpand');
+            const chevron = document.getElementById('contactChevron');
+            expand.classList.toggle('expanded');
+            chevron.classList.toggle('rotated');
+        }
+    </script>
+</body>
+</html>
