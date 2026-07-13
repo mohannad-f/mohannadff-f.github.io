@@ -229,7 +229,7 @@ body.dark-mode .dot { background: rgba(255, 255, 255, 0.1); }
 
 /* عنوان الموقع الرئيسي */
 .site-title { text-align: center; margin-bottom: 40px; }
-.site-name { font-size: 4rem; font-weight: 700; color: #2d5016; margin-bottom: 15px; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); animation: titleGlow 4s ease-in-out infinite alternate; }
+.site-name { font-size: 4rem; font-weight: 700; color: #ffffff; margin-bottom: 15px; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); animation: titleGlow 4s ease-in-out infinite alternate; }
 .site-subtitle { display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; }
 .subtitle-ar { font-size: 1.4rem; color: rgba(255,255,255,0.9); font-weight: 500; }
 .subtitle-en { font-size: 1rem; color: rgba(255,255,255,0.7); font-style: italic; font-family: 'Roboto', sans-serif; font-weight: 300; }
